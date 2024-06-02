@@ -1,0 +1,589 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{authblk}
+
+\title{The New MININEC (Version 3): A Mini-Numerical Electromagnetic Code}
+\author{J. C. Logan and J. W. Rockway}
+\affil{Naval Ocean Systems Center San Diego}
+\date{September 1986}
+
+\begin{document}
+\maketitle
+\bibliographystyle{unsrt}
+
+\newcommand{\dd}[1]{\mathrm{d}#1}
+\newcommand{\vect}[1]{\bar{#1}}
+\newcommand{\Einc}{\vect{E}_{\mathrm{inc}}}
+
+\section{Introduction}
+The ``MINI'' Electromagnetics Code, or MININEC, is a method of moments
+computer program for analysis of thin wire antennas \cite{r1}. A
+Galerkin procedure is applied to an electric field integral equation to
+solve for the wire currents following an approach suggested by Wilson
+\cite{r2}. This formulation results in an unusually short computer
+program suitable for implementation on a microcomputer. Hence, MININEC
+is written in a BASIC language compatible with many popular
+microcomputers.
+
+MININEC solves for impedance and currents on arbitrarily oriented wires,
+including configurations with multiple wire junkctions, in free space
+and over a perfectly conducting ground plane. Options include lumped
+parameter impedance loading of wires and calculation of near zone and
+far zone fields. Both near electric fields and near magnetic fields can
+be determined for free space and over a perfectly conducting ground. The
+far zone electric fields and radiation pattern (power pattern) can also
+be determined for free space and perfectly conducting ground.
+
+Additional radiation pattern options include a Fresnel reflection
+coefficient correction to the patterns, for finite conducting grounds
+(real earth surface impedance). Up to five changes in surface impedance
+due to real ground are allowed in a linear or circular ``cliff'' model.
+The cliff may take on any elevation (including zero, i.e., a flat
+surface), however, there is no correction for diffraction from cliff
+edges. In the case of a circular cliff model, the first media may
+include a correction for the surface impedance of a densely spaced,
+buried, radial wire ground screen.
+
+The first version of MININEC given by NOSC TD 516 \cite{r1}, calculated
+currents and radiation patterns for wire antennas in free space and over
+a perfectly conducting ground plane. Wires attached to ground were
+required to intersect at a right angle and could not be impedance loaded
+at the connection point. Subsequent revisions corrected these
+shortcomings culminating in version 2 of MININEC(2), given by Li, et al.
+\cite{r3}. All previous versions of MININEC require user specification
+of wire end connections. However, MININEC(3) determines connection
+information for itself from user defined wire end coordinates.
+MININEC(3) also displays the currents wire by wire, and at all wire
+ends, including wire junctions. MININEC(3) features an improved, faster
+solution routine and has been completely restructured using a more
+modular programming style, including the use of helpful comment
+statements.
+
+\subsection{Background}
+The Numerical Electromagnetics Code (NEC) found in reference \cite{r4}
+is the most adavanced computer code available for the analysis of thin
+wire antennas. It is a highly user-oriented computer code offering a
+comprehensive capability for analysis of the interaction of
+electromagnetic waves with conducting structures. The program is based
+on the numerical solution of integral equations for the currents induced
+on the structure by an exciting field.
+
+NEC combines an integral equation for smooth surfaces with one for wires
+to provide convenient and accurate modeling for a wide range of
+applications. A NEC model may include nonradiating networks and
+transmission lines, perfect and imperfect conductors, lumped element
+loading, and ground planes. The ground planes ma be perfectly or
+imperfectly conducting. Excitation may be via applied voltage source or
+incident plane wave. The output may include induced currents and
+charges, near or far zone electric or magnetic fields, and impedance or
+admittance. Many other commonly used parameters such as gain and
+directivity, power budget, and antenna to antenna coupling are also
+available.
+
+NEC is a powerful tool for many engineering applications. It is ideal
+for modeling co-site antenna environments in which the interaction
+between antenna and environment cannot be ignored. In many problems,
+however, the extensive full capability of NEC is not really required
+because the antenna and its environment are not very complex or the
+information sought requires only a simplified model. In addition, NEC
+requires the support of and access to a large main-frame computer
+system. These computer systems are expensive and not always readily
+available at remote field activities. Even when the computer facilities
+are available, heavy demand usage may result in slow turnaround, even
+for relatively simple or small NEC runs. One viable solution is a
+``stripped down'' version of NEC that would retain only the basic
+solution and the most frequently used options and which could be
+implemented on a mini- or microcomputer with an advanced FORTRAN
+language capability. MININEC(3) offers many of the required NEC options,
+but makes use of a BASIC language that is compatible with many popular
+microcomputers. MININEC(3) is only suitable for small problems less than
+75 unknowns and 10 wires, depending on the computer memory and BASIC
+compiler.
+
+\subsection{Computer Requirements}
+Occasionally a technology develops which is destined to produce
+significant changes in the way people think and conduct their business.
+For many decades, scientists and engineers struggled with unmanageable
+equations and data using trial and error techniques, employing
+logarithmic tables and inadequate slide rule calculations. Then came the
+digital computer.
+
+In the 1950s and 60s, physically large and expensive computing machines
+that were relatively slow, with limited capability compared to today's
+standards, became available to few. At first, stored programs were
+accessible through direct connection of individual terminals a short
+distance away. The revolution had begun.
+
+In the 70s, technologists rushed to convert proven algorithms into
+computer programs or to develop new algorithms suitable for efficient
+computer programming for use as analysis and synthesis tools by the
+scientific community. These tools, for the most part, required the
+support of large central machines. Meanwhile, slide rules were being
+replaced by hand-held calculators with trigonometric functions, some of
+which could be programmed for simple repetitive algorithms.
+
+Today, large central processing systems are being supplemented with
+small powerful mini- and microcomputers. The development of the low cost
+microprocessor chip means that computers with capabilities that equal or
+exceed those of the earlier main frame machines of the 60s are now
+available in compact size. Sizes range from suitcase, or desktop,
+machines the microcomputer to file cabinet machines the minicomputer
+that [unreadable] expanded or configured to meet specialized needs. The
+microcomputer is becoming more and more affordable as a personal
+computing tool. The microcomputer, or ``home computer'', is emerging as
+today's most important engineering and scientific tool, allowing
+widespread networking. Anyone with a microcomputer or terminal with an
+acoustic coupler and telephone has access to a wide variety of computing
+facilities around the country, as well as an almost limitless source of
+information.
+
+MININEC has been written with the microcomputer in mind. But, it can
+also be implemented on mini- or larger computers that have the BASIC
+language capability. However, some changes in the program may be
+required. Programming hs been kept simple, with few machine-dependent
+program statements, so that it will be compatible with most BASIC
+languages.
+
+NEC is suitable for both small and large numeric models. The upper limit
+is determined by the cost factors and memory size of the mainframe on
+which it resides. A model containing up to 2000 unknowns (segments)
+seems to be the practical upper limit. On the other hand, MININEC is
+suitable only for small problems. The upper limit is determined by the
+memory size and speed of the microcomputer employed. Practical limits
+seem to be 30 to 40 unknowns (current pulses) when using interpreter
+BASIC, due to the time required to obtain a solution. However, if one is
+willing to wait an hour or more for the solution, a model with 65 to 75
+unknowns is possible. Serious antenna modeling requires the use of a
+BASIC compiler. In addition, a math co-processor board is recommended.
+Present microcomputer memory size limits MININEC to models with less
+than 100 unknowns. For problems of 100 or more unknowns, a mainframe is
+recommended, and in that case, the use of NEC is the natural choice.
+
+\section{The Theory of MININEC}
+The MININEC program is based on the numerical solution of an integral
+equation representation of the electric fields. Discussion of similar
+formlations can be found elsewhere, for example, see Harrington
+\cite{r5}. The real advantage is that the solution techniques as
+implemented in MININEC results in a relatively compact (i.e. short)
+computer code. The discussion that follows in this section is condensed
+from reference \cite{r2}.
+
+\subsection{The Electric Field Integral Equation and its Solution}
+It has become customary in solving wire antenna problems to make several
+assumptions which are valid for thin wires. They are that the wire
+radius $a$, is very small with respect to the wavelength and the wire
+length. Because it is necessary to subdivide wires into short segments,
+the radius is assumed small with respect to the segment lengths as well,
+so that the currents can be assumed to be axially directed; i.e., there
+are no azimuthal components of current.
+
+Figure~\eqref{fig1} gives the geometry of a typical, arbitrarily oriented
+wire. Assume that the wire is straight, even though the theory applies
+equally to bent configurations. The same wire is also shown broken into
+segments or subsections.
+
+In equations \eqref{eq1}, \eqref{eq2}, and \eqref{eq3} below, the vector and
+scalar potentials are given by
+
+\begin{equation}
+\vect{A} = \frac{\mu}{4\pi} \int_c I(s)\hat{s}(s)k(s-s^\prime)\dd{s}
+\label{eq1}
+\end{equation}
+
+\begin{equation}
+\Phi = \frac{1}{4\pi\varepsilon} \int_c q(s)k(s-s^\prime)\dd{s}
+\label{eq2}
+\end{equation}
+
+where
+\[ k(s-s\prime) = \frac{1}{2\pi}\int_{-\pi}^{\pi} \frac{e^{-jkr}}{r}\dd{\Phi}
+\]
+
+\[ r = ((s-s^\prime)^2 + 4a^2\sin^2\frac{\Phi}{2})^{\frac{1}{2}}
+\]
+
+and the linear charge density (via the continuity equation) is
+\begin{equation}
+q(s) = \frac{-1}{j\omega}\frac{\dd{I}}{\dd{s}}
+\label{eq3}
+\end{equation}
+
+The kernel $k$ becomes the ``exact kernel'' when
+$\vect{r}\rightarrow\vect{r^\prime}$ on $c$, but can be accurately
+replaced by the ``reduced kernel,''
+$k_0 = e^{-jkr}/r$, $|\vect{r} - \vect{r}(s)|^2+a^2(s)^{1/2}$
+for $|\vect{r}-\vect{r^\prime}| \gg a$.
+
+The integral equation relating the incident field, $\Einc$, and the
+vector and scalar potentials is
+
+\begin{equation}
+-\Einc\cdot\hat{s}\times
+-j\omega\hat{A}\cdot\hat{s}-\hat{s}\cdot\nabla\Phi
+\quad .
+\label{eq4}
+\end{equation}
+
+Equation \eqref{eq4}, above, is solved in MININEC by using the following
+procedure.
+
+The wires are divided into equal segments, and, as shown in
+Figure~\ref{fig1}, the vectors $\vect{r}_n, n=0, 1, \ldots N+1$ are
+defined, with respect to the global coordinate origin, $0^n$. The unit
+vectors parallel to the wire axis for each segment shown are defined as
+
+\begin{equation}
+\hat{s}_{n+1/2} = \frac{\vect{r}_{n+1}
+- \vect{r}_n}{|\vect{r}_{n+1}-\vect{r}_n|}
+\quad .
+\label{eq5}
+\end{equation}
+
+Pulse testing and pulse expansion functions used in MININEC are defined as
+\begin{equation}
+P_n(s) = \left\{
+\begin{array}{ll}
+1, & s_{n-1/2} < s < s_{n+1/2} \\
+0, & \mathrm{otherwise}        \\
+\end{array}\right.
+\label{eq6}
+\end{equation}
+
+where the points $s_{n\pm1/2}$ designate segment midpoints,
+
+\begin{equation}
+s_{n+1/2} = \frac{s_{n+1} + s_n}{2}
+\label{eq7}
+\end{equation}
+
+or in terms of the global coordinates,
+
+\begin{equation}
+\hat{r}_{n+1/2} = \frac{\hat{r}_{n+1} + \hat{r}_n}{2}
+\quad.
+\label{eq8}
+\end{equation}
+
+It is assumed that the components of the vectors $\Einc$
+and $\vect{A}$ in equation \eqref{eq4} are sufficiently smooth over each
+segment that their respective values on each segment may be replaced by
+those taken at the point $s_m$. The pulse functions of \eqref{eq6} are
+then used as testing functions on \eqref{eq4}, resulting in
+
+\begin{equation}
+\begin{aligned}
+\Einc(s_m)&\cdot
+\left[\left(\frac{s_m-s_{m-1}}{2}\right)\hat{s}_{m-1/2}
++ \left(\frac{s_{m+1} - s_m}{2}\right)\hat{s}_{m+1/2}\right] = \\
+j\omega\vect{A}(s_m)&\cdot
+\left[\left(\frac{s_m-s_{m-1}}{2}\right)\hat{s}_{m-1/2}
++ \left(\frac{s_{m+1}-s_m}{2}\right)\hat{s}_{m+1/2}\right] + \\
+\Phi(s_{m+1/2}) &- \Phi(s_{m-1/2}) \\
+\end{aligned}
+\label{eq9}
+\end{equation}
+
+The vector quantities in brackets are simply
+$(\vect{r}_{m+1/2} - \vect{r}_{m-1/2})$,
+so \eqref{eq9} can be written as
+
+\begin{equation}
+\begin{gathered}
+\Einc(s_m)\cdot(\vect{r}_{m+1/2}-\vect{r}_{m-1/2}) = \\
+j\omega\vect{A}(s_m)\cdot(\vect{r}_{m+1/2}-\vect{r}_{m-1/2})
++\Phi(s_{m+1/2}) - \Phi(s_{m-1/2})
+\quad.
+\end{gathered}
+\label{eq10}
+\end{equation}
+
+The currents are expanded in pulses centered at the junctions of
+adjacent segments as illustrated in Figure~\ref{fig2a}. Note that pulses
+are omitted from the wire ends. This is equivalent to placing a half
+pulse of zero amplitude at each end, thus imposing the boundary
+condition for zero current at unattached wire ends. The current
+expansion can be written as
+
+\begin{equation}
+I(s) = \sum_{n=1}^{N} I_n P_n (s)
+\quad.
+\label{eq11}
+\end{equation}
+
+A difference approximation is applied to equation \eqref{eq3} to compute
+the charge. Thus, as shown in Figure~\ref{fig2b}, the charge can be
+represented as pulses displaced from the current pulses by a half pulse
+width.
+
+Substituting \eqref{eq11} into \eqref{eq10} produces a system of
+equations that can be expressed in matrix form. Each matrix element,
+$Z_{mn}$, associated with the $n$-th current and the $s_m$ observation
+point involves scalar and vector potential terms with integrals of the
+form
+
+\begin{equation}
+\Phi_{m,u,v} = \int_{s_u}^{s_v} k(s_m - s^\prime)\dd{s^\prime}
+\label{eq12}
+\end{equation}
+
+where
+
+\begin{equation}
+k(s-s^\prime) = \frac{1}{2\pi}\int_{-\pi}^\pi\frac{e^{-jkr}m}{r_m}\dd{\Phi}
+\label{eq13}
+\end{equation}
+
+and
+
+\begin{equation}
+r_m = \left((s_m - s^\prime)^2 + 4a^2\sin^2\frac{\Phi}{2}\right)^{1/2}
+\quad.
+\label{eq14}
+\end{equation}
+
+Equation \eqref{eq12} does not lend itself to straightforward
+integration because of the singularity at $r=0$. The $1/r$ can be
+subtracted from the integrand and then added as a separate term to yield
+
+\begin{equation}
+k(s-s^\prime) = \frac{1}{2\pi}\int_{-\pi}^\pi \frac{\dd{\Phi}}{r_m}
++\frac{1}{2\pi}\int_{-\pi}^\pi\frac{e^{-jkr}m-1}{r_m}\dd{\Phi}
+\quad.
+\label{eq15}
+\end{equation}
+
+The first term of \eqref{eq15} can be rewritten as an elliptic integral
+of the first kind (reference~\cite{r6}).
+
+\begin{equation}
+\frac{\beta}{\pi a}F\left(\frac{\pi}{2}, \beta\right) =
+\frac{1}{2\pi}\int_{-\pi}^\pi\frac{\dd{\Phi}}{r_m}
+\label{eq16}
+\end{equation}
+
+where
+\[ \beta=\frac{2a}{\left(s_m-s^\prime)^2+4a^2[\right]^{1/2}}
+\]
+
+$F(\frac{\pi}{2}$ has an approximation (reference~\ref{r6}).
+
+\begin{equation}
+\begin{aligned}
+F\left(\frac{\pi}{2}, \beta\right) \cong\ 
+& [a_0m + a_1m + a_2m^2 + a_3m^3] \cdot     \\
+& [b_0 + b1_m + b_2m^2 + b_3m^3]\ln(1/m)    \\
+\end{aligned}
+\label{eq17}
+\end{equation}
+
+where
+
+\[
+m = 1 - \beta^2 = \frac{(s_m - s^\prime)^2}{(s_m - s^\prime)^2 + 4a^2}
+\]
+
+and
+
+\[
+\begin{array}{lrl}
+a_0 = & 1.38629\ 436112 & b_0 = .5            \\
+a_1 = &  .09666\ 344259 & b_1 = .12498\ 59397  \\
+a_2 = &  .03590\ 092383 & b_2 = .06880\ 248576 \\
+a_3 = &  .03742\ 563713 & b_3 = .03328\ 355346 \\
+a_4 = &  .01451\ 196212 & b_4 = .00441\ 787012 \\
+\end{array}
+\]
+
+Thus
+
+\begin{equation}
+\frac{\beta}{\pi a}F\left(\frac{\pi}{2},\beta\right)
+\overrightarrow{s\rightarrow s^\prime}
+-\frac{1}{\pi a}\ln\left[\frac{|s_m - s^\prime|}{8a}\right]
+\label{eq18}
+\end{equation}
+
+and this singularity is also subtracted from $k(s_m-s^\prime)$.
+
+Thus
+
+\begin{equation}
+\begin{gathered}
+k(s_m - s^\prime) = -\frac{1}{\pi a}\ln \left[\frac{|s_m - s^\prime|}{8a}\right]
++\frac{\beta F(\frac{\pi}{2}, \beta)
+      + \ln\left[\frac{|s_m - s^\prime|}{8a}\right]}{\pi a}  \\
++ \frac{1}{2\pi}\int_{-\pi}^\pi\frac{e^{-jkr}-1}{r}\dd{\Phi} \\
+\end{gathered}
+\label{eq19}
+\end{equation}
+
+This equation is substituted into equation~\eqref{eq12} and written as
+
+\begin{equation}
+\int_{s_u}^{s_v} k(s-s^\prime)\dd{s^\prime} = I_1 + I_2 + I_3
+\quad.
+\label{eq20}
+\end{equation}
+
+$I_1$, $I_2$, and $I_3$ are defined as
+
+\begin{equation}
+\begin{aligned}
+I_1 & = -\frac{1}{\pi a}\int_{s_u}^{s_v}
+        \ln\left[\frac{|s-s^\prime|}{8a}\right] \dd{s^\prime}
+    & = \left.\frac{8}{\pi} u(1-\ln|u|)\right|_{u_1}^{u_2}
+\end{aligned}
+\label{eq21}
+\end{equation}
+
+where
+
+\[ u_1 = \frac{s_u - s}{8a} \mbox{and} u_2 = \frac{s_v - s}{8a}
+\]
+
+Similarly,
+
+\begin{equation}
+I_2 = \int_{s_u}^{s_v}
+\frac{\beta F\left(\frac{\pi}{2}, \beta\right)
++ \ln\frac{|s-s^\prime|}{8a}}{\pi a}\dd{s^\prime}
+\label{eq22}
+\end{equation}
+
+This integral has a well behaved integrand and can be integrated
+numerically. The integration is broken up into two integrals over the
+ranges $(s_u, s)$ and $(s, s_v)$ for best accuracy. Gaussian quadrature
+is used for the numerical integration (reference~\cite{r7}). The number
+of points used in the integration routine is automatically selected by
+consideration of the pulse accuracy required for the source to
+observation distance. The final integral is
+
+\begin{equation}
+I_3 = \frac{1}{2\pi}\int_{s_u}^{s_v}\int_{-\pi}^\pi\frac{e^{-jkr}-1}{r}\dd{\Phi}
+\quad.
+\label{eq23}
+\end{equation}
+
+The integrand is nonsingular and can be integrated numerically. To
+obviate the need for double integration, it is convenient to approximate
+the integral by replacing $r$ by a reduced kernel approximation of
+equation~\eqref{eq14}.
+
+Thus
+
+\begin{equation}
+I_3 = \int_{s_u}^{s_v}\frac{e^{-jkr_a}-1}{r_a}\dd{s^\prime}
+\label{eq24}
+\end{equation}
+
+where
+
+\[
+r_a = \sqrt{(s_v - s^\prime) + a^2}
+\quad.
+\]
+
+The integral can be integrated numerically by the same procedure as for
+$I_2$.
+
+Thus, equation~\eqref{eq12} with its singularity problem is evaluated by
+adding $I_1$ of equation~\eqref{eq21}, $I_2$ of equation~\eqref{eq22}, and
+$I_3$ of equation~\eqref{eq24}.
+
+This approach to evaluate~\eqref{eq12} is accurate for a wide range of
+wire radii but breaks down when the radius becomes very small. For very
+small radii, equation~\eqref{eq12} may be expressed as a single integral
+and evaluated using two terms of a Maclaurin series, after Harrington
+(reference~\cite{r5}). This approximation for the $\Phi$ terms is:
+
+\begin{equation}
+\begin{array}{ll}
+\Phi = \frac{1}{2\pi\delta s}\ln\left(\frac{\delta s}{a}\right)
+-j\frac{k}{4\pi}                   & \mbox{for } m=n          \\
+\Phi = \frac{e^{-jkr_m}}{4\pi r_m} & \mbox{for } m\ne n \quad.\\
+\end{array}
+\label{eq25}
+\end{equation}
+
+Figure~\ref{fig3} demonstrates the range and validity with and without
+the small radius correction. Without the correction, MININEC gives
+acceptable answers for wire radii between $10^{-2}$ and $10^{-5}$ wave
+lengths. Note that MININEC is within 10\% or better of the data
+published by King (references~\cite{r8} and~\cite{r9}), for radii
+between $10^{-3}$ and $10^{-2}$ wave lengths. The small radius
+correction provides correct results for radii of $10^{-4}$ wave lengths
+or smaller. In MININEC, the switch to the small radius approximations
+occurs automatically for radii of $10^{-4}$ and smaller.
+
+By substitution, the matrix equation to be solved is
+
+\begin{equation}
+[Z_{mn}] = [I_n] = [V_m]
+\label{eq26}
+\end{equation}
+
+where
+
+\begin{equation}
+\begin{gathered}
+[Z_{mn}] = \left.\frac{-1}{4\pi j\omega\varepsilon}\right[
+k^2(\vect{r}_{m+1/2} - \vect{r}_{m-1/2}) \cdot
+(\hat{s}_{n+1/2}\Phi_{m,n,n+1/2} + \hat{s}_{n-1/2}\Phi_{m,n-1/2,n}) \\
+\left.
+-\frac{\Phi_{m+1/2,n,n+1}}{s_{n+1}-s_n}+\frac{\Phi_{m+1/2,n-1,n}}{s_n-s_{n-1}}
++\frac{\Phi_{m+1/2,n,n+1}}{s_{n+1}-s_n}-\frac{\Phi_{m+1/2,n-1,n}}{s_n-s_{n-1}}
+\right]\\
+\end{gathered}
+\label{eq27}
+\end{equation}
+
+and
+\begin{equation}
+V_m = \Einc(s_m)\cdot(\vect{r}_{m+1/2}-\vect{r}_{m-1/2})
+\quad.
+\label{eq28}
+\end{equation}
+
+$[Z_{mn}]$ is a square matrix and $[I_n]$ and $[V_m]$ are column
+matrices with $n=1,2,\ldots N$ and $m=1,2,\cdot N$ total unknowns ($N$ is
+the total number of current pulses). The extension of these equations to
+two or more coupled wires follows the same line of development and will
+not be covered here.
+
+The column vector $[V_m]$ represents an applied voltage that
+superimposes a constant tangential electric field along the wire for a
+distance of one segment length centered conincident with the location of
+the current pulses. Hence, for a transmitting antenna, all elements of
+$V_m]$ are set to zero except for the element(s) corresponding to the
+segment(s) located at the desired feed point(s). For an incident plane
+wave, all elements of $[V_m]$ must be assigned a value depending on the
+strength, polarization (or orientation), and angle of incidences of the
+plane wave. The applied voltage source (transmit case), however, is the
+only ready-made, or programmed, option in MININEC.
+
+As stated above, the $[Z_{mn}]$ matrix in equation~\eqref{eq26} is
+filled by the evaluation of an elliptic integral and use of Gaussian
+quadrature for numerical integration. The solution of~\eqref{eq26} can
+be accomplished by using any one of a number of standard matrix solution
+techniques. MININEC(3) uses a triangular decomposition (LU
+decomposition) with the Gauss elimination procedure with partial
+pivoting (reference~\cite{r7}).
+
+\section{Wire Junctions}
+The theory developed thus far for straight wires is equally applicable
+to bent wires. However, for coding simplicity in MININEC, bent wires are
+treated in the same way as the junctions of multiple numbers of wires.
+That is, a bend in an otherwise straight wire is treated as the junction
+between two straight wires.
+
+It has been generally accepted that the currents at junctions of thin
+wires conform to Kirchoff's current law (reference~\cite{r10}). Rather
+than explicitly enforcing this condition in MININEC, an overlapping
+segment scheme (reference~\cite{r11}) is employed at junctions of two or
+more wires. A detailed discussion of this approach, including arguments
+for validity, appears in both references~\cite{r8} and~\cite{r9}. Only
+those aspects essential to the use of MININEC are discussed here.
+
+\end{document}
