@@ -16,6 +16,12 @@
 \newcommand{\dd}[1]{\mathrm{d}#1}
 \newcommand{\vect}[1]{\bar{#1}}
 \newcommand{\Einc}{\vect{E}_{\mathrm{inc}}}
+\newcommand{\Hplus}{\stackrel{H}{+}}
+\newcommand{\Aplus}{\stackrel{A}{+}}
+\newcommand{\Pin}{P_{\mbox{IN}}}
+\newcommand{\ave}[1]{#1_{\mbox{ave}}}
+\newcommand{\peak}[1]{#1_{\mbox{peak}}}
+\newcommand{\bounce}[1]{#1_{\mbox{bounce}}}
 
 \section{Introduction}
 The ``MINI'' Electromagnetics Code, or MININEC, is a method of moments
@@ -585,5 +591,754 @@ segment scheme (reference~\cite{r11}) is employed at junctions of two or
 more wires. A detailed discussion of this approach, including arguments
 for validity, appears in both references~\cite{r8} and~\cite{r9}. Only
 those aspects essential to the use of MININEC are discussed here.
+
+Consider a wire having no connections at either end. The wire is
+subdivided into segments and the current is expanded in pulses centered
+at adjacent segment junctions as described above and illustrated in
+Figure~\ref{fig4a}. The end points hav no pulses, or alternatively the
+end points have half pulses with zero amplitude. A second wire is to be
+attached to one end of the first. The second wire is subdivided into
+segments with pulses for currents located as in the first case. However,
+a full pulse is located at the attachment end, with half the pulse
+extending onto wire two, and half onto wire one, as illustrated in
+Figure~\ref{fig4b}. The half on wire one assumes the dimensions (length
+and radius) of the half segment on wire one, while the half on wire two
+assumes the dimensions appropriate to wire two. Wire two overlaps onto
+wire one with a full pulse centered at the junction end. Note that the
+free end of the wire has a zero half pulse. A third wire may be assumed
+to also overlap onto wire one, as illustrated in Figure~\ref{4c}. It can
+be shown (see references~\cite{r8} and~\cite{r9}) that for a junction of
+$N$ wires, only $N-1$ overlapping pulses are required to satisfy
+Kirchoff's current law. Alternatively, wire three could have overlapped
+onto wire two (not illustrated here).
+
+The convention in MININEC(3) is that the overlap occurs onto the
+earliest wire specified at a given junction. It is assumed that a wire
+can overlap onto another wire, provided that another wire was previously
+specified. It cannot overlap onto a wire not yet specified. Either end
+of a wire may overlap onto either end of another wire. All that is
+required to impose the continuity conditions at the junction is that
+there be $N-1$ overlaps for a junction of $N$ wires.
+
+Current reference directions are assumed to be based on the order in
+which the coordinates of a wire are specified. A positive wire current
+is from the end first specified, end one, towards the other end, end
+two. By use of Kirchoff's current law and the current reference
+direction, the currents at the junction can be found. For example,
+suppose the wires in Figure~\ref{fig4c} are all specified from left to
+right. Let the pulse amplitudes for the first pulse on wires two and
+three be $I_2$ and $I_3$, respectively. Then the currents out of the
+junctions into wires two and three are the complex amplitudes of the
+first pules, the overlapping pulses, on wires two and three,
+respectively. Hence, the current on wire one into the junction is the
+sum of these currents; i.e., $I_1=I_2+I_3$.
+
+MININEC(3) automatically determines, during geometry input, whether
+there is a connection on either end of a wire, and if so, to which wire
+and wire end it is connected. After solving for the current pulse
+amplitudes, MININEC(3) then computes the junction currents, if any, for
+each wire end. The final display indicates free ends by the letter
+\verb+E+ (for free end) and junction ends by the letter \verb+J+. The
+geometry and currents are displayed wire by wire.
+
+\subsection{The Ground Plane}
+\label{sec-groundplane}
+
+The method of images is used in MININEC to solve for currents in wires
+located over a perfectly conducting ground plane.
+
+Consider a wire structure represented by $N$ segments. In the presence
+of a perfectly conducting ground plane, by image theory, the structure
+and ground plane may be replaced by the original structure and its
+image. Hence, there are now $2N$ segments and $2N$ unknowns to be
+determined. Equation~\eqref{eq26} can be written as
+
+\begin{equation}
+\left[
+\begin{array}{l}
+V_1    \\
+\vdots \\
+V_N    \\
+\vdots \\
+V_{2N} \\
+\end{array}
+\right]
+=
+\left[
+\begin{array}{lllll}
+Z_{11}   & \cdots & Z_{1N} & \cdots & Z_{1,2N}  \\
+\vdots   &        &\vdots  &        & \vdots    \\
+Z_{N1}   & \cdots & Z_{NN} & \cdots & Z_{N,2N}  \\
+\vdots   &        &\vdots  &        & \vdots    \\
+Z_{2N,1} & \cdots &\cdot   & \cdots & Z_{2N,2N} \\
+\end{array}
+\right]
+=
+\left[
+\begin{array}{l}
+I_1    \\
+\vdots \\
+I_N    \\
+\vdots \\
+I_{2N}    \\
+\end{array}
+\right]
+\label{eq29}
+\end{equation}
+
+The image current, $I_{N+1}\cdots I_{2N}$, are equal to the currents on
+the original structure, $I_1\cdots I_N$, so that $I_n = I_{2N-n+1}$. Half
+the equations represented in~\eqref{eq29} contain redundant information
+and may be discarded. It may be reduced to a square matrix again by
+adding appropriate columns; i.e., by using the current identity.
+Hence~\eqref{eq29} becomes
+
+\begin{equation}
+V=[Z^\prime_{ij}I
+\label{eq30}
+\end{equation}
+
+where $Z^\prime_{ij} = Z_{ij} + Z_{i\ 2N-j+1}$.
+
+For a wire attached to ground, a current pulse is automatically added to
+the wire end point connected to ground so that current continuity with
+its image is observed; i.e., a non-zero half pulse is placed on both the
+wire end and its image. The voltage in equation~\eqref{eq30} is divided
+by two in this case. Either end of a wire may be attached to ground.
+
+\subsection{Lumped Parameter Loading}
+The wire structures discussed so far consist of perfectly conducting
+wires. If an impedance due to a fixed load, $Z_L = R + jX$, is added to
+the structure so that its location coincides with that of one or more of
+the non-zero-current pulse functions (i.e., a lumped load is placed on
+the wire at the junction of two segments), then the load introduces an
+additional voltage (a voltage drop) equal to the product of the current
+pulse magnitude and $Z_L$. Hence, equation~\eqref{eq26} becomes
+
+\begin{equation}
+[Z^\prime_{mn}][I_n]=[V_m]
+\label{eq31}
+\end{equation}
+
+where $Z^\prime_{mn}=Z_{mn}$ for $m\ne n$ and $Z^\prime_{mn}=Z_mn+Z_L$
+for $m=n$. Hence, a specified impedance represented as the sum of a
+resistance and a reactance, and located on a wire coincident with a
+current pulse is simply added to the diagonal impedance element or
+self-term corresponding to that pulse. A distributed impedance such as
+wire conductivity can be treated in the same way by use of an
+equivalent, lumped-circuit, element-impedance relationship.
+
+\subsection{Near Fields}
+The electric near fields and the magnetic near fields can be determined
+from the current distribution obtained in the solution of
+equation~\eqref{26}.
+
+The near electric fields are computed by the method described by
+A.~T.~Adams, et al., (reference~\cite{r12}). Using MININEC, the current
+on the wire structure is approximated using the computed current pulses.
+To determine the electric field at a given point in the near field, a
+small, virtual thin-wire dipole is placed tat the point with its axis
+parallel to the appropriate vector component. The open-circuit voltage
+at the near field point can be calculated from the knowledge of the
+current distribution over the wire structure and the mutual impedance
+between the wire structure and the virtual dipole. In other words,
+
+\begin{equation}
+V_d = \sum_{i=1}^{N}Z_{di}I_i \quad.
+\label{eq32}
+\end{equation}
+
+The virtual dipole is open-circuited. $V_d$ is the open-circuit voltage.
+$I_i$ are the MININEC computed current pulses of the wire structure.
+$Z_{di}$ are the mutual impedances between the wire structure and the
+virtual dipole. The mutual impedances are calculated using the MININEC
+method of equation~\eqref{eq27}. The electric field strength along the
+direction of the virtual dipole is given by
+
+\begin{equation}
+E_d = -\frac{V_d}{\mbox{length of dipole}}\quad.
+\label{eq33}
+\end{equation}
+
+This equation is evaluated once for each electric field vector component
+in the $x$, $y$ and $z$ directions at the near field point of interest.
+In MININEC, a virtual dipole of length .001 wave length is used.
+
+MININEC calculates the three vector components $E_x$, $E_y$ and $E_z$,
+as real and imaginary terms, from which the magnitude and phase are
+determined. The average value is determined by
+
+\begin{equation}
+\ave{E} = \left[\frac{1}{2}(E_x^2+E_y^2+E_z^2)\right]^{1/2}
+\label{eq34}
+\end{equation}
+
+which is a conservative estimate of the maximum value. The maximum or
+peak electric field is determined by the method described by Adams and
+Mendelovicz (reference~\cite{r13}). The peak electric field is
+
+\begin{equation}
+\peak{E} = \left[\frac{1}{2}(E_x^2+E_y^2+E_z^2)
+                +\frac{1}{2}(A^2+B^2)^{1/2} \right]^{1/2}
+\label{eq35}
+\end{equation}
+
+where
+\[ A = E_x^2\cos 2\theta_x + E_y^2\cos 2\theta_y + E_z^2\cos 2\theta_z
+\]
+\[ B = E_x^2\sin 2\theta_x + E_y^2\sin 2\theta_y + E_z^2\sin 2\theta_z
+\]
+
+and where $O_x$, $O_y$, and $O_z$ are the phase angles for the
+corresponding field component.
+
+The near magnetic fields are computed by a comparable method. As is the
+case for electric near fields, the currents on the wires are
+approximated by the current pulses of the MININEC solution. A virtual,
+thin-wire dipole is placed at the near field point with its axis
+parallel to the appropriate vector component. The near magnetic field is
+then calculated using the MININEC current distribution and the
+difference between the appropriate components of the vector potential.
+
+The vector potential is generally defined such that 
+
+\begin{equation}
+\Hplus = \frac{1}{\mu}\nabla X\Aplus
+\label{eq36}
+\end{equation}
+
+expressed in rectangular coordinates, becomes
+
+\begin{equation}
+\mu\Hplus =
+\left(\frac{\partial A_z}{\partial y} - \frac{\partial A_y}{\partial z}\right)
+\hat{i} +
+\left(\frac{\partial A_x}{\partial z} - \frac{\partial A_z}{\partial x}\right)
+\hat{j}+
+\left(\frac{\partial A_y}{\partial x} - \frac{\partial A_x}{\partial y}\right)
+\hat{k}
+\label{eq37}
+\end{equation}
+
+whre $\hat{i}$, $\hat{j}$, $\hat{k}$ are the unit vectors parallel to
+the $x$, $y$, $z$ coordinate axis, respectively. And where $A_x$, $A_y$,
+$A_z$ are the corresponding components of the vector potential evaluated
+at the location of the virtual dipole (i.e., the near field point). If
+the virtual dipoles are electrically short enough so that the fields
+vary continuously and smoothly over the dipole length, the partial
+derivatives of equation~\eqref{eq37} can be replaced by differences:
+
+\begin{equation}
+\mu\Hplus =
+\left(\frac{\delta A_z}{\delta y} - \frac{\delta A_y}{\delta z}\right)
+\hat{i} +
+\left(\frac{\delta A_x}{\delta z} - \frac{\delta A_z}{\delta x}\right)
+\hat{j}+
+\left(\frac{\delta A_y}{\delta x} - \frac{\delta A_x}{\delta y}\right)
+\hat{k}
+\label{eq38}
+\end{equation}
+
+such that, for example, $\delta A_z/\delta_y$ is the change in the
+Z-component of the vector potential along a y-directed virtual dipole of
+length $\delta y$, located at the near field point, etc. In MININEC, the
+virtual dipole length is .001 wave length for both the near electric and
+near magnetic field calculations.
+
+MININEC calculates the three vector components, $H_x$, $H_y$ and $H_z$
+as real and imaginary terms, from which the magnitude and phase are
+determined. The average and peak values of the magnetic near fields are
+found in the same way as they are for the electric near fields. Thus,
+
+\begin{equation}
+\ave{H} = \left[\frac{1}{2}(H_x^2 + H_y^2 + H_z^2)\right]^{1/2}
+\label{eq39}
+\end{equation}
+
+and
+
+\begin{equation}
+\peak{H} = \left[\frac{1}{2}(H_x^2 + H_y^2 + H_z^2)
+                +\frac{1}{2}(A^2 + B^2)^{1/2} \right]^{1/2}
+\label{eq40}
+\end{equation}
+
+where
+
+\[ A = H_x^2\cos 2\theta_x + H_y^2\cos2\theta_y + H_z^2\cos2\theta_z
+\]
+\[ B = H_x^2\sin 2\theta_x + H_y^2\sin2\theta_y + H_z^2\sin2\theta_z
+\]
+
+and $\theta_i$ are the corresponding phase angles.
+
+Both the electric and magnetic near fields can be scaled for any desired
+radiated power from the wire structure since the near fields are
+directly proportional to the square root of the power radiated.
+
+\section{Far Zone Radiation Patterns}
+Once the induced currents on the wires have been determined from
+equation~\eqref{eq25}, the radiated electric fields are computed by
+
+\begin{equation}
+\vect{E}(\vect{r}_0) = \int_L\frac{jks}{\pi s} + \frac{e^{-jkr_0}}{r_0}
++[\hat{k} + \vect{I}(a)\hat{k}-\vect{I}(a)]e^{i\vect{K}\cdot\vect{r}}\dd{s}
+\label{eq41}
+\end{equation}
+
+whre $\vect{r}_0$ is the position vector at the observation point,
+$\bar{k} = \vect{r}_0 / |\vect{r}_0|$, and
+$\vect{K} = k\hat{k} = \frac{2\pi}{\lambda}\hat{k}$. The integral is
+evaluated in closed form over each straight wire segment for each
+current pulse and is reduced to tha summation over the wire segments.
+The fields are then evaluated as real and imaginary parts of the
+$\theta$ and $\phi$ copmponents at a specified radial distance. If the
+radial distance is zero, the factor $e^{-jkr_0}/r_0$ defaults to unity.
+
+The power gain in MININEC is evaluated with the $e^{-jkr_0} / r_0$
+factor set to one in an approach similar to that in NEC
+(reference~\cite{r4}). The power gain in a given direction
+$(\theta, \phi)$ in sperical coordinates is
+
+\begin{equation}
+G = 10 \log\left(\frac{4\pi P(\theta,\phi)}{\Pin}\right)
+\label{eq42}
+\end{equation}
+
+where $P(\theta,\phi)$ is the power radiated per unit steradian in the
+direction $(\theta, \phi)$ and $\Pin$ is the total input power to the
+antenna. Note that directive gain could be obtained by replacing
+$\Pin$ by the total power radiated. This step is not done in MININEC.
+$\Pin$ is calculated from the applied voltages and the corresponding
+feed point currents as
+
+\begin{equation}
+\Pin = \sum_{i=1}^{N}(1/2) \Re(V_n I_n^*)
+\label{eq43}
+\end{equation}
+
+where $I_n^*$ denotes complex conjugate and $n$ is the number of
+sources. $P(\theta,\phi)$ is determined from
+
+\begin{equation}
+\P(\theta,\phi) = 1/2 r_0^2 \Re[\vect{E}\times\vect{H}
+= \frac{r_0^2}{2n}\vect{E}\cdot\vect{E}^*
+\label{eq44}
+\end{equation}
+
+where $r_0$ is the magnitude of the position vector $\vect{r}_0$ in the
+$(\theta,\phi)$ direction. In MININEC, the gains are calculated for the
+individual orthogonal components of the field determined from
+equation~\eqref{eq41}. The power gain thus obtained from \eqref{eq42} is
+in dB above the gain of an isotropic antenna (sometimes denoted as dBi).
+
+MININEC includes an option to correct the far fields and gain for the
+effects of real ground using a Fresnel reflection coefficient. The
+method is similar to the far field corrections used in NEC
+(reference~\cite{r4}), but is not limited to one or two mediums. The
+surface of the ground is divided into a finite number of zones with a
+constant conductivity and dielectric constant in each zone, i.e., a
+constant surface impedance for each zone. The zones are defined by
+circular boundaries concentric about the origin or linear boundaries
+parallel to the y-axis and spaced along the positive x-axis. Thus, in
+the latter case, the ground surface is divided into ``strips'' at user
+defined x-axis intercepts. In the former case, the ground surface is
+divided into concentric rings at user specified radii. In this case, the
+first ring, or zone, may include a radial wire ground screen. For both
+circular and linear zone grounds, each zone may have a different surface
+impedance and each zone may have a different height (Z-coordinate)
+relative to the first zone. In MININEC, the number of zones is limited
+by an array dimension and is currently set to 5.
+
+In the Fresnel reflection coefficient method, the far field is obtained
+by summing the contributions of a direct ray and a reflected ray from
+each current pulse. The field, due to the reflected ray, is modified by
+the Fresnel plane wave reflection coefficient, which depends on the
+ground surface impedance at the bounce point, or specular point, and the
+angle of incidence.
+
+The Fresnel reflection coefficients have not been applied to the MININEC
+current calculation. When a real ground is specified, the currents are
+calculated by using the perfectly conducting image theory (described in
+section~\ref{sec-groundplane}. The real ground corrections are applied
+to the far field calculations only. This compromise is designed to keep
+MININEC relatively compact and provide accurate results whenever the
+ground directly beneath the antenna is a good conductor.
+
+Following along the lines of the development given by Burke and Poggio
+(reference~\cite{r4}), a wave incident upon a finite ground (i.e., a
+real ground) yields a reflected field, $\vect{E}_r$, given by
+
+\begin{equation}
+\vect{E}_R = R_H\left[(\vect{E}_I\cdot\hat{P})\hat{P}\right]
+           + R_V\left[\vect{E}_I-(\vect{E}_I\cdot\hat{P})\hat{P}\right]
+\label{eq45}
+\end{equation}
+
+or
+
+\begin{equation}
+\vect{E}_R = R_V\vect{E}_I + (R_H - R_V)(\vect{E}_I\cdot\hat{P})\hat{P}
+\label{eq46}
+\end{equation}
+
+where $\hat{P}$ is a unit vector perpendicular to the plane of
+incidence. $\vect{E}_I$ is the incident field and $R_V$ and $R_H$ are
+the vertical and horizontal reflection coefficients, respectively.
+
+The two terms in square brackets in equation~\eqref{eq44} correspond to
+horizontally and vertically polarized waves. The reflected field is
+obtained by decomposing the incident field into horizontally and
+vertically polarized waves, computing a reflected wave for each, and
+recombining the two.
+
+The vertical and horizontal coefficients are
+
+\begin{equation}
+R_V = \frac{\cos\theta - z\sqrt{1-z^2\sin^2\theta}}
+           {\cos\theta + z\sqrt{1-z^2\sin^2\theta}}
+\label{eq47}
+\end{equation}
+
+\begin{equation}
+R_H = \frac{-z\cos\theta - \sqrt{1-z^2\sin^2\theta}}
+           {\cos\theta + z\sqrt{1-z^2\sin^2\theta}}
+\label{eq48}
+\end{equation}
+
+where $\theta$ is the angle of incidence and $Z$ is the relative
+impedance of the ground surface (relative to the free space impedance).
+
+For a given observation direction $(\theta, \phi)$, the $\hat{P}$ vector
+normal to the plane of incidence is
+
+\begin{equation}
+\hat{P} = (-\sin\theta, \cos\phi)
+\label{eq49}
+\end{equation}
+
+as may be seen in Figure~\ref{fig5c}. In addition, the $\vect{r}_0$
+vector, pointing in the observation direction, is
+
+\begin{equation}
+\vect{r}_0 = (\sin\theta\cos\phi, sin\theta\sin\phi, \cos\theta)
+\label{eq50}
+\end{equation}
+
+To obtain the far fields, the integral in equation~\eqref{eq40} implies
+the summation over all the current pulses. For the direct field, the
+currents and vectors pointing to the current pulse centers are
+calculated and stored in arrays by MININEC during the matrix solution
+process. The incident field on the ground surface is also computed from
+a summation over the currents, but this requires the coordinates of the
+specular point (the bounce point). For the geometry illustrated in
+Figure~\ref{fig5}, the specular point is given by
+
+\begin{equation}
+\bounce{r} = \sqrt{\bounce{x}^2 + \bounce{y}^2}
+\label{eq51}
+\end{equation}
+
+\begin{equation}
+\bounce{x} = x_i + d\cos\phi
+\label{eq52}
+\end{equation}
+
+\begin{equation}
+\bounce{y} = y_i + d\sin\phi
+\label{eq53}
+\end{equation}
+
+\begin{equation}
+d = Z_i \tan\theta
+\label{eq54}
+\end{equation}
+
+The value of $\bounce{x}$ or $\bounce{r}$ is used
+appropriately for the case of linear or circular zone boundaries to
+determine in which media the bounce occurs. The height of the ground at
+this point is used to locate the image of the source.
+
+The ground surface impedance in any zone is given by
+
+\begin{equation}
+Z_g = \frac{1}{\sqrt{\frac{\varepsilon}{\varepsilon_0}
+                    - j\frac{G}{\omega\varepsilon_0}}}
+\label{eq55}
+\end{equation}
+
+The surface impedance, when a ground screen is present and the specular
+point lies on the ground screen, is given by Wait in
+reference~\cite{r14}, (also see reference~\cite{r4}). The impedance of
+the ground screen by itself is
+
+\[
+Z_gs (\bounce{r} = ?\sqrt{\varepsilon_0\mu_0}
+\frac{?\bounce{r}}{N} ?? \frac{\bounce{r}}{NC_0}
+\]
+
+where $N$ is the number of wires in the ground screen and $C_0$ is the
+radius of each wire. The effective ground impedance is formed by
+computing the parallel impedance of the ground without the ground screen
+and the impedance of the ground screen without the ground, or
+
+\begin{equation}
+Z = \frac{Z_g Z_{gs}}{Z_g + Z_{gs}}
+\label{eq56}
+\end{equation}
+
+(where $Z=Z_g$ if no ground screen is present).
+
+The total field at a point $(\theta,\phi,r)$ is the vector sum of the
+direct and reflected fields as described. When the range $r$
+is set to zero or the power gain option is selected, the
+$e^{-jkr} / r$ term is set to unity. The total resulting field is used
+in equation~\eqref{eq43} to calculate the power gain.
+
+\section{Validation and Modeling Guidance}
+The solution to an antenna problem generated by a method of moments
+computer program is, at best, an approximation. How close the solution
+is to reality depends in part on (1) the numerical methods employed in
+the code (and how well these methods are implemented), (2) the inherent
+accuracy (i.e., the number of significant digits) of the computer, (3)
+how well the antenna being modeled conforms to the limitations (i.e.,
+simplifying assumptions) of the electromagnetics formulation used to
+create the computer program, and (4) the user's experience. Nonetheless,
+highly acurate answers can be obtained by careful modeling of the
+antenna configuration, taking into account the inherent limitations of
+the computer program.
+
+Reliable, accurate answers are obtained when the user has accumulated
+sufficient experience from frequent and systematic exercise of the
+program to recognize problem areas. He must be fully awarte of potential
+difficulties throughout the modeling process, from initially setting up
+a problem to interpreting the results. It is recommended that the user
+run MININEC for a number of elementary problems, comparing the results
+to independent solutions or real world measurements, until he has the
+confidence to apply the code to a problem for which the answer is
+unknown. The examples in this section provide a good place to start.
+
+Development of confidence in the computer solution is a process of
+discovery of the limitations of the computer program. This entails the
+modeling of a number of simple antenna structures found in standard
+texts on antenna theory. The results may be used as guidelines to model
+more complex antenna geometries. Natural first choices are dipoles in
+free space and over ground (or monopoles), followed by TEE and inverted
+L shaped antennas, etc. For each antenna type, a number of problems are
+selected involving different wire lengths and radii. MININEC is run for
+each angenna problem a number of times, varying segmentation (i.e., a
+convergence test) and other parameters to reveal the program
+limitations. Insight for effective application of the program is gained
+from comparisons with measured data or analytical solutions (when
+available). In this manner, modeling guidelines are derived and updated
+from simpler antenna problems for which there is reliable measured data
+or generally accepted theoretical data.
+
+\subsection{Dipole Antennas}
+The theoretical behavior of the dipole antenna has been studied
+intensely, and the literature is rich with exammples that include
+measured and theoretical data, references~\cite{r8},~\cite{r9},
+\ref{r15},~\ref{r16}. Comparison of MININEC results to this data for
+dipoles of various dimensions establishes validation and provides the
+basis for modeling guidelines. For example, convergence tests for
+various length dipoles reveals the accuracy that can be expected and
+provides a rational criterion for selection of segmentation density (the
+number of segments per wire) based on wire length in wave lengths.
+
+Figure~\ref{fig6} through \ref{fig11} show the results of convergence
+tests for an electrically short dipole (much shorter than the first
+resonance length), a dipole near resonance, and a dipole near
+antiresonance, respectively. Each dipole is electrically thin and center
+driven. Part (a) Figures (\ref{fig6},~\ref{fig8}, and~\ref{fig10}) give
+the variation of admittance, versus the number of segments. Part (b)
+Figures (\ref{fig7},~\ref{fig9}, and~\ref{fig11}) give the percent
+difference between MININEC and the values published by R.W.P. King,
+references~\cite{r8} and~\cite{r9}.
+
+The electrically short dipole, Figures~\ref{fig6} and~\ref{fig7}, and
+the half wave dipole, Figures~\ref{fig8} and~\ref{fig9}, show definitive
+signs of convergence and stability. No sign of convergence is seen for
+the antiresonant dipole, Figure~\ref{fig10} and~\ref{fig11}. The authors
+also have seen similar convergence problems near antiresonance for other
+method of moment codes (notably NEC). Figures~\ref{fig6}
+through~\ref{fig11} can be used as guidance for selection of the
+segmentation density. An antenna is modeled as a collection of wires.
+Each wire is divided into a number of short segments selected by the
+user. The number of segments to achieve a desirable confidence level can
+be based on the results of Figures~\ref{fig6} through~\ref{fig11},
+depending on the wire length in wave lengths. Using this data does not
+guarantee convergence or the percent accuracy for a more complicated
+antenna, but it does provide a starting point. Convergence testing is
+always advisable.
+
+Given the convergence properties of MININEC, how well does it predict
+dipole properties? Figure~\ref{fig12} is a comparison of a single,
+30-segment MININEC model to the theory given by King
+(references~\cite{r9}). Shown is the admittance-versus-dipole length for
+both MININEC and King. The difference is less that .5 millimho for most
+of the range, with the greatest difference of about 1.5 millimhos in the
+susceptance at a dipole length of .64 wave lengths. For longer or
+shorter antennas, the user is advised to perform suitable convergence
+tests.
+
+The accuracy of the method of moments solution depends also on meeting
+the thin wire criterion. To illustrate, Figure~\ref{fig13} shows the
+variation of admittance versus the wire radius. The data given by King
+(references~\cite{r9}) are slso shown for radii betwenn $10^{-3}$ and
+$10^{-2}$ wave lengths. The segment to radius ratio, $\delta/a$, is 25
+at $^01{-3}$ and 2.5 at $10^{-2}$. For thicker wires than $10^{-2}$, the
+thin wire criteria is not achieved and the results are expected to be
+not as good. The data show valid behavior for thin wires with
+$\delta/a > 2.5$ or radii of $10^{-2}$ wave lengths and smaller.
+
+Numerical problems may occur in the solution when quantities become too
+small for the inherent accuracy of the computer. An example is the
+erroneous results that can occur for very short segments.
+Figure~\ref{fig14} shows the results of a test designed to identify the
+sort segment limit. Shown is the admittance-versus-dipole length in wave
+lengths for a 10-segment dipole in free space. The conductance and
+susceptance displays the proper behavior for a dipole length greater
+than $10^{-3}$ wave lengths. This corresponds to a segment length of
+$10^{-4}$ wave lengths and longer. Below $10^{-3}$, the conductance
+oscillates about the expected values as the segment length is reduced,
+and at times displays negative, non-physical values. A change from
+single precision to double precision extends the validity range to even
+shorter segments, but significantly increases the solution time beyond
+acceptable run times for a 16-bit microcomputer. For MININEC, on a
+16-bit machine in single precision, the segment length should always be
+greater than $10^{-4}$ wave lengths.
+
+Antennas are often constructed of wires and towers or other conductors
+with vastly different radii. Even simple dipoles may have tapered
+elements. A typical MININEC model may therefore involve the connection
+of wires with large step changes in radii. The stepped-radius wire
+junction has been extensively studied by Glisson and Wilton
+(references~\cite{r17}). Figure~\ref{fig15} is the stepped wire geometry
+used in their study. They adapted a body of revolution computer code,
+PEC; to solve very accurately for currents and charges along the stepped
+wire antenna. The results were compared to NEC in this study.
+
+Figures~\ref{fig16},~\ref{fig17},~\ref{fig18}, and~\ref{fig19} show the
+current distribution predicted by PEC, NEC and MININEC for radii steps
+of 1:1.25, 1:5, 1:10 and 1:100, respectively. The NEC data are from
+their report. The MININEC results follow the PEC data surprisingly well
+for all step ratios. (We believe the difference between NEC and PEC may
+be an error in the data in the Glisson report. We have not observed this
+difference in NEC data.) Further investigation of MININEC for different
+stepped radius problems should be conducted. Suggestions include moving
+the feed closer to the step and switching the radii $a_1$ and $a_2$.
+
+Multiple wire antenna structures may often require very close spacing.
+When the spacing is very small, the currents may not be adequately
+represented by a thin filament on the wire axis as it is represented in
+MININEC. Figures~\ref{fig20},~\ref{21},~\ref{fig22}, and~\ref{fig23}
+show MININEC data for a parallel wire test used to investigate the close
+spacing limit. The test consists of evaluating the self and mutual
+admittance between two parallel half wave dipoles. One antenna is driven
+(i.e., the source is in the center pulse) while the second is not. The
+self admittance is the feed point current on the first wire if the
+applied voltage is 1 + j0 volts and the mutual admittance is the current
+for the center pulse of the second wire.
+
+Figure~\ref{fig20} shows the self admittance compared to the theory by
+R.W.P. King (references~\cite{r9}) for dipole center to center spacings
+between .1 and .5 wave length. Figure~\ref{fig21} shows a similar
+comparison for the mutual admittance over the same range. The
+differences between MININEC and R.W.P. King are mostly less than .2
+millimho and are no greater than .4 millimho in the worst case over the
+range shown for both self and mutual admittance.
+
+Given the good agreement with theory down to a spacing of .1 wave
+length, how does MININEC fare for closer spacing? Figures~\ref{fig22}
+and~\ref{fig23} show the magnitude and phase of the mutual admittance
+for spacings down to the point of contact of the two parallel dipoles.
+Keep in mind the good agreement between MININEC and theory for spacings
+of .1 wave length and greater. (Reference~\cite{r9} does not provide
+data for spacings less than .1, no comparison is shown.) It can be seen
+that the magnitude and phase continue smoothly as the spacing is
+reduced. Although these data are not conclusive, it can be implied that
+MININEC can model antenna configurations with wire spacings less than .1
+wave length. Whenever a model has close spacing, however, it is
+advisable to examine the results very closely to ensure proper behavior.
+
+\subsection{Loop Antennas}
+A circular wire loop antenna may be modeled by connecting a number of
+wires to form a polygon approximation to the circular loop. A simple
+model has one segment per wire, with each wire forming one side of the
+polygon model, so that the number of sides and the number of segments
+are equal. For a given circumference, the number of wires, and hence the
+number of segments, can be increased until the solution stabilizes,
+indicating the number of seides required to model the circular loop.
+Figure~\ref{fig24} shows the results of this procedure for a loop, one
+wave length in circumference. The polygon model is circumscribed by a
+circle whose circumference is one wave length. The wire radius
+($a=.00674$ meter) is chosen to correspond to the published data given
+by R.W.P. King (references~\cite{r9}). At best, the real part of the
+MININEC admittance comes to within 3\% of King's data and the imaginary
+part approaches to within 6\%. For 22 segments (and 22 sides) the
+percent difference in real and imaginary is about equal, and less than
+6\% for each.
+
+Figure~\ref{fig25} compares MININEC and R.W.P. King admittance data for
+a range of loop diameters from .1 to 2.0 wave lengths. The MININEC model
+is the 22 segment or 22 sided polygon loop. The agreement is excellent.
+The difference between King and MININEC is no greater than .4 millimho
+over the entire range. From .1 to .8 wave length, the MININEC data and
+King data are virtually identical.
+
+Figures~\ref{fig26} and~\ref{fig27} show MININEC data for small loops
+with a circumference from $10^{-3}$ to just above .4 wave length. Keep
+in mind the excellent agreement with King's data for loops of .1 and
+greater (Figure~\ref{fig25}). The real and imaginary parts of the
+adminttance in Figures~\ref{fig26} and~\ref{fig27}, respectively, are
+well behaved for loops greater than $10^{-2}$ wave lengths. Below
+$10^{-2}$, the real part of the admittance becomes unstable due to
+numerical problems encountered at the limits of single precision. Note
+that at 22 segments, the segment size at a circumference of $10^{-3}$,
+is very nearly the same short segment length limit displayed by the
+dipole test in Figure~\ref{fig14}. The data in
+Figures~\ref{fig25},~\ref{fig26}, and~\ref{fig27} suggest a small loop
+limit for MININEC (on a 16-bit, single precision microcomputer) of
+$10^{-2}$ wave lengths in circumference. This corresponds to a loop 18
+inches in diameter at 2~MHz (about the size of a basketball goal).
+
+\subsection{Monopoles and Antennas Above Ground}
+Simply stated, an antenna above a perfectly conducting ground plane is
+equivalent to the original antenna and its mirror image in free space.
+Hence, all the modeling results and guidelines presented so far are
+directly applicable to monopoles. Specifically, the convergence
+properties illustrated in Figures~\ref{fig6} through~\ref{fig11} can be
+used for the initial selection of the segmentation required for a
+monopole. However, this should not preclude convergence testing whenever
+possible.
+
+Figure~\ref{fig28} illustrates the geometry of a TEE-antenna. The
+antenna is driven or fed at its base from a coaxial termination at the
+ground plane. The dimensions for two Tee-antenna designs ($K_0 h = .2$
+and $K_0 h = .5$) are also given. A convergence test was performed for
+each antenna using the segmentation scheme in the table. The results of
+these tests are given in Figures~\ref{fig29} and~\ref{fig30} for
+$K_0 h = .2$ and $K_0 h = .5$, respectively. A comparison of the
+``best'' results to the measurements of Prasad and King
+(references~\cite{r18}) for MININEC and several other codes is given in
+Figure~\ref{fig31}.
+
+Figure~\ref{fig31} compares five computer programs including MININEC for
+the two TEE-antennas. In each case, the programs were tested for
+convergence and the best answer with respect to Prasad's measurements is
+given. NEC is the code previously described (references~\cite{r4}). TGP
+(Triangular-Galerkin Procedure) is teh code written by Chao and Straight
+(references~\cite{r11}) using triangular expansion and testing functions
+in a Galerkin procedure (i.e., triangles for both testing and expansion
+functions). PSRT (Piece-wise Sinusoidal Reaction Technique) is a
+sinusoidal Galerkin code written by Richmond (references~\cite{r19}).
+TWTD (Thin Wire Time Domain) is a time domain method of moments code
+written by Van Blaricum and Miller (references~\cite{r20}). TWTD uses
+subsection collocation (quadratic interpolation with point matching) to
+solve for the time-dependent induced currents and time-dependent
+radiated fields. Admittance data are obtained from a discrete Fourier
+transform of the source current. All codes except MININEC are in FORTRAN
+and require mainframe (large) computers. The data show that MININEC can
+provide equally accurate answers.
 
 \end{document}
