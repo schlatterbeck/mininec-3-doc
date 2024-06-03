@@ -1,3 +1,6 @@
 *.aux
 *.log
 *.dvi
+*.bbl
+*.blg
+.*.swp

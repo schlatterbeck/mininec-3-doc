@@ -22,6 +22,7 @@
 \newcommand{\ave}[1]{#1_{\mbox{ave}}}
 \newcommand{\peak}[1]{#1_{\mbox{peak}}}
 \newcommand{\bounce}[1]{#1_{\mbox{bounce}}}
+\newcommand{\jj}{\mbox{j\,}}
 
 \section{Introduction}
 The ``MINI'' Electromagnetics Code, or MININEC, is a method of moments
@@ -1138,7 +1139,7 @@ or generally accepted theoretical data.
 The theoretical behavior of the dipole antenna has been studied
 intensely, and the literature is rich with exammples that include
 measured and theoretical data, references~\cite{r8},~\cite{r9},
-\ref{r15},~\ref{r16}. Comparison of MININEC results to this data for
+\cite{r15},~\cite{r16}. Comparison of MININEC results to this data for
 dipoles of various dimensions establishes validation and provides the
 basis for modeling guidelines. For example, convergence tests for
 various length dipoles reveals the accuracy that can be expected and
@@ -1341,4 +1342,223 @@ transform of the source current. All codes except MININEC are in FORTRAN
 and require mainframe (large) computers. The data show that MININEC can
 provide equally accurate answers.
 
+\subsection{Near Fields}
+MININEC can calculate the near fields for antennas in free space and
+over perfectly conducting ground. Only antennas over perfectly
+conducting ground are considered in this section.
+
+Figure~\ref{fig32} shows a comparison of MININEC and NEC and to
+measurements. The data are the near electric fields of a 10.67-meter
+monopole over a good conducting ground screen at 2~MHz. The fields are
+for 1~KW radiated power. The measurements were made using an E-field
+sensor (EFS-1) manufactured by Instruments for Industry
+(reference~\cite{r21}). The NEC data are from a single precision version
+(NEC-1) running on a VAX 11780 computer. The agreement between both
+codes and the measurements is acceptable over the range shown. The
+accuracy of the measurements is 5 to 10\%, with the greatest error
+occurring for distances of 10 meters and greater, due to the effects of
+nearby structures. The differences between NEC and MININEC are due in
+part because the NEC data is from a single precision version.
+
+Figures~\ref{fig33} and~\ref{fig34} are a comparison of MININEC and NEC
+near field data for a quarter wave monopole over perfect ground. The NEC
+data are from a double precision version (NEC-3) running on a VAX 11780
+computer. Figure~\ref{fig33} gives the vertical and radial components of
+the electric field and Figure~\ref{fig34} gives the phi-component of the
+magnetic field. The MININEC data has been scaled to the power level of
+the NEC data. The NEC and MININEC data are essentially identical.
+Figures~\ref{fig35} and~\ref{fig36} show the percent difference between
+the NEC and MININEC fields of Figures~\ref{fig33} and~\ref{fig34}. The
+greatest difference occurs very close to the monopole within a segment
+length.
+
+\begin{figure}[h]
+\begin{tabular}{lll}
+\multicolumn{2}{l}{\quad Radius of Wire = $0.004/\lambda$}  \\
+\multicolumn{2}{l}{\quad $k_0 = (h + l) = \pi/2$}           \\
+         & $\frac{2\pi h}{\lambda}=0.2$ & $\frac{2\pi h}{\lambda}=0.5$ \\
+\ \\
+\hline
+\ \\
+MEASURED & $2.6+\jj9.0$                 & $11+\jj36$      \\
+MININEC  & $1.8+\jj9.0$                 & $11.6+\jj35.5$  \\
+NEC      & $1.7+\jj10.3$                & $11+\jj36$      \\
+TGP      & $1.78+\jj9.13$               & $11.1+\jj34.3$  \\
+PSRT     & $1.7+\jj3.8$                 & $11.4+\jj31.9$  \\
+TWTD     &                              & $11+\jj34$      \\
+\end{tabular}
+\caption{Comparison of TEE-antenna impedance computations with the
+measured values of Parsad.}
+\label{fig31}
+\end{figure}
+
+If the near fields are calculated along the surface of the monopole, the
+differences between MININEC and NEC are much more pronounced.
+Figures~\ref{fig37} and~\ref{fig38} show the electric fields along the
+wire surface of the monopole and Figure~\ref{fig39} shows the magnetic
+fields. The MININEC data were scaled to the same power radiated as the
+NEC data. The differences are due to the approximation used by MININEC
+to determine the fields since the current distribution (not illustrated)
+is nearly the same for both codes. The impedance calculated by each code
+is a measure of this agreement. MININEC predicts an impedance of
+42.170~+~j~21.478 ohms and NEC predicts 42.387~+~j~24.873 ohms.
+
+The accuracy of the MININEC near fields has been illustrated. MININEC
+near fields are sufficiently accurate for well converged solutions at
+distances greater than a segment length.
+
+\subsection{Far Fields}
+The correct pattern shape can often times be calculated using a coarse
+approximation to the antenna current distribution. However, since the
+antenna input impedance is used to determine gain, it is necessary to
+use a well-converged solution to obtain accurate gain data.
+Figure~\ref{fig40} illustrates both these points. Shown is a comparison
+between MININEC and teh classical solutions from Schelkunoff
+(reference~\cite{r22}) and Jasik (reference~\cite{r23}). The coarse
+solutions are represented by the Schelkunoff and Jasik data. Their data
+are obtained by assuming sinusoidal currents as noted. The MININEC data
+are obtained by reference to the convergence data of the previous
+sections and by adjusting the frequency to obtain the exact resonance
+condition of near zero reactance. The agreement in gain and impedance
+data (when available) is fairly good. Data given by Schelkunoff for
+antennas longer than one wave length cannot be trusted because of the
+assumptions he employs for the current distribution.
+
+\begin{figure}[h]
+\begin{center}
+Radiation Resistance and Gain for Dipole Antennas
+\end{center}
+\begin{tabular}{lcllcllcl}
+\multicolumn{3}{c}{MININEC Data}       &
+\multicolumn{3}{c}{Schelkunoff Data}   &
+\multicolumn{3}{c}{Jasik Data}         \\
+\multicolumn{3}{l}{Wire Stub:}         &
+\multicolumn{3}{l}{Current Element:}   &
+\multicolumn{3}{l}{Very Short Dipole:} \\
+N & = & 2 segments & \multicolumn{3}{l}{constant current} \\
+l & = & length = $.02\lambda$ & l & = & $.02\lambda$      \\
+a & = & radius = $.001\lambda$                            \\
+Z & = & $.0790-\jj3388$ ohms & R & = & $80s^2(1/\lambda)^2 = .3158$ ohms \\
+G & = & 1.754 dB & G & = & 1.761 dB & G & = & 1.76 dB     \\
+\\
+\multicolumn{3}{l}{Half Wave Dipole:} &
+\multicolumn{3}{l}{Half Wave Dipole:} &
+\multicolumn{3}{l}{Half Wave Dipole:} \\
+N & = & 30 & \multicolumn{3}{l}{cosine current} \\
+l & = & .5~m & l & = & $.5\lambda$ \\
+a & = & 0.00001~m \\
+f & = & 293 MHz \\
+Z & = & 72.21+\jj.6485 ohms &
+R & $\rightarrow$ & \multicolumn{4}{l}{73.13 ohms as $a/\lambda\rightarrow0$} \\
+G & = & 2.13 dB   & G & = & 2.151 dB & G & = & 2.15 dB \\
+  &   &           &   &   &          & \multicolumn{3}{l}{(Krauss: 2.14 dB)} \\
+\multicolumn{3}{l}{Full Wave Dipole:} &
+\multicolumn{3}{l}{Full Wave Dipole:} \\
+N & = & 30        & \multicolumn{3}{l}{cosine current distribution} \\
+l & = & 1 m       & l & = & $1\lambda$ \\
+a & = & .00001 m  & l & = & $0.00001\lambda$ \\
+f & = & 285.3 MHz & R & = &
+    \multicolumn{4}{l}{$(276\log \lambda/{2a}) - 110l^2/199$} \\
+  &   &           &   & = & 7145 ohms \\
+G & = & 3.63 dB   & G & = & 3.82 dB   \\
+\end{tabular}
+\begin{center}
+Monopole Radiation Resistance and Gain\\\ \\
+\begin{tabular}{ll}
+\multicolumn{1}{c}{MININEC} & \multicolumn{1}{c}{Jasik} \\
+N${}=15$ segments            & ``quarter wave dipole    \\
+h${}=.25$ m                  & above perfect ground''   \\
+a${}=.00001$ m               &                          \\
+f${}=293$ MHz                &                          \\
+Z${}=36.10+\jj.3352$ ohms    &                          \\
+G${}=5.145$ dB               & G${}=5.15$ dB            \\
+\end{tabular}
+\end{center}
+\caption{Comparison of MININEC impedance and gain data to classical
+values given by Schelkunoff and Jasik.}
+\end{figure}
+
+\subsection{Memory, Disk Storage and Run Time}
+Computer memory, disk storage capacity, and solution time are key
+limiting factors in the use of all method of moments thin wire antenna
+codes because of the need to store and manipulate (solve or invert) a
+matrix of complex numbers. These limits are particularly acute when
+using a microcomputer. Mega-byte hard disks and compilers can partially
+alleviate these limits.
+
+MININEC has been written specifically for the use in the personal
+computer environment. Hence the choice of the BASIC language, and the
+choice of the simple pulse expansion and testing functions (to keep
+overhead down). Every effort has been made to produce a fast compact
+computer code. Earlier versions of MININEC were written to minimize
+program size (length). The present version, however, has sacrificed size
+for improved internal documentation, modularity and increased
+capability.
+
+Figure~\ref{fig41} is a comparison of the run times between MININEC
+version~2 and MININEC version~3. Both codes were compiled for comparison
+using a Microsoft BASIC compiler. Use of a math co-processor will
+significantly reduce the run times. The co-processor was not used to
+obtain the data in Figure~\ref{fig41}. For comparison, some other
+attributes of the codes are as follows:\\
+
+\ \\
+\begin{tabular}{lrrrr}
+&
+\multicolumn{2}{c}{MININEC(2)} &
+\multicolumn{2}{c}{MININEC(3)} \\
+&
+\multicolumn{1}{c}{Interpreter} &
+\multicolumn{1}{c}{Compiled}    &
+\multicolumn{1}{c}{Interpreter} &
+\multicolumn{1}{c}{Compiled}    \\
+No. of lines         & 543 & -- & 1607 &  -- \\
+\\
+Max. no. of wires    &  10 & 75 &   10 &  50 \\
+\\
+Max. no. of          &  50 & 75 &   30 &  50 \\
+\quad segments \\
+Disk storage         &  13 & 57 &   44 & 108 \\
+\quad (k bytes) \\
+\end{tabular}
+
+The solution time and size of the executable is a function of the
+compiler and the compiler/linker options used.
+
+The significant increase in speed of MININEC(3) is attributable to an
+improved solution routine. The matrix fill time, the time to compute all
+terms of the matrix, is virtually the same for both versions of MININEC.
+For large problems, the fill time is usually longer than the factor
+time, the time to solve the matrix. Figure~\ref{fig42} compares the
+matrix fill time, factor time and total solution time for MININEC(3) to
+solve a dipole in free space. Matrix fill time dominates for problems
+above 20 segments.
+
+The solution time not only increases with the number of segments, but
+also increases with the number of wire junctions. This effect can be
+seen in the data in Figure~\ref{fig43}. Shown is the total solution time
+(fill time plus factor time) for a half wave dipole and a loop antenna
+in free space. The loop is an extreme case in which the number of wire
+junctions equals the number of segments. Also shown in Figure~\ref{fig43}
+is the total solution time for a quarter wave monopole and a TEE-antenna
+(previously described) over perfect ground. The wire junction in the
+TEE-antenna is responsible for the longer solution time compared to the
+monopole. The solution time is also longer for antennas over perfect
+ground compared to free space. For comparison, the monopole is
+equivalent to a dipole in free space with twice the number of segments.
+Even so, the dipole solution time is a little shorter than the monopole.
+
+The brute force approach to circumvent memory and solution time limits
+is to seek out ever larger, faster computers. The logical extension is
+to rewrite MININEC in a more powerful language such as FORTRAN and use a
+mainframe computer. But if a mainframe is available, one really should
+be using the more powerful NEC program. NEC is written in FORTRAN and is
+designed for efficient mainframe use. The concept of MININEC is to use a
+personal computer (PC). In time, as PCs become more powerful, then
+MININEC, too, will expand in capability. In the meantime, MININEC is
+appropriate for application to small problems (less than 100 segments).
+Larger problems should be solved with NEC on an appropriate size
+computer.
+
+\bibliography{mininec}
 \end{document}
