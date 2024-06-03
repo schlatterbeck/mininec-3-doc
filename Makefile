@@ -4,8 +4,9 @@ LATEX=latex
 
 all: mininec3.pdf
 
-mininec3.dvi: fig1.eps fig2.eps fig3.eps fig4.eps fig5.eps \
-    fig6.eps fig7.eps fig8.eps fig9.eps fig10.eps fig11.eps
+mininec3.dvi: fig1.eps fig2.eps fig3.eps fig4.eps fig5.eps  \
+    fig6.eps fig7.eps fig8.eps fig9.eps fig10.eps fig11.eps \
+    fig12.eps fig13.eps fig14.eps fig15.eps
 
 %.dvi: %.tex
 	$(LATEX) $<

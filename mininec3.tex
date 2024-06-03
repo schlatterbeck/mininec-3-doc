@@ -1232,9 +1232,7 @@ difference in admittance between MININEC and R. W. P. King
 (references~\cite{r8} and~\cite{r9}) (Part b)}
 \label{fig11}
 \end{sidewaysfigure}
-
 \afterpage\clearpage
-
 
 \subsection{Dipole Antennas}
 The theoretical behavior of the dipole antenna has been studied
@@ -1293,11 +1291,32 @@ thin wire criteria is not achieved and the results are expected to be
 not as good. The data show valid behavior for thin wires with
 $\delta/a > 2.5$ or radii of $10^{-2}$ wave lengths and smaller.
 
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig12.eps}}
+\caption{Dipole admittance predicted by MININEC (compared to the theory of
+R. W. P. King \cite{r8},~\cite{r9})}
+\label{fig12}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig13.eps}}
+\caption{[Dipole admittance vs. Wire Radius] (compared to the theory of
+R. W. P. King \cite{r8},~\cite{r9})}
+\label{fig13}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig14.eps}}
+\caption{[Admittance vs. Dipole length] predicted by MININEC}
+\label{fig14}
+\end{sidewaysfigure}
+\afterpage\clearpage
+
 Numerical problems may occur in the solution when quantities become too
 small for the inherent accuracy of the computer. An example is the
 erroneous results that can occur for very short segments.
 Figure~\ref{fig14} shows the results of a test designed to identify the
-sort segment limit. Shown is the admittance-versus-dipole length in wave
+short segment limit. Shown is the admittance-versus-dipole length in wave
 lengths for a 10-segment dipole in free space. The conductance and
 susceptance displays the proper behavior for a dipole length greater
 than $10^{-3}$ wave lengths. This corresponds to a segment length of
@@ -1319,6 +1338,12 @@ junction has been extensively studied by Glisson and Wilton
 used in their study. They adapted a body of revolution computer code,
 PEC; to solve very accurately for currents and charges along the stepped
 wire antenna. The results were compared to NEC in this study.
+
+\begin{figure}[htb]
+\centerline{\includegraphics{fig15.eps}}
+\caption{Geometry for the stepped radius antenna problem}
+\label{fig15}
+\end{figure}
 
 Figures~\ref{fig16},~\ref{fig17},~\ref{fig18}, and~\ref{fig19} show the
 current distribution predicted by PEC, NEC and MININEC for radii steps
