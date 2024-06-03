@@ -3,11 +3,27 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{authblk}
+\usepackage{fancyvrb}
+\usepackage[dvips]{graphicx}
+\usepackage{afterpage}
+\usepackage{rotating}
+\fvset{fontsize=\footnotesize}
 
 \title{The New MININEC (Version 3): A Mini-Numerical Electromagnetic Code}
 \author{J. C. Logan and J. W. Rockway}
 \affil{Naval Ocean Systems Center San Diego}
 \date{September 1986}
+
+% penalties
+\clubpenalty=5000
+\widowpenalty=5000
+% float placement
+\renewcommand{\topfraction}{1.0}    % max fraction of floats at top
+\renewcommand{\bottomfraction}{1.0} % max fraction of floats at bottom
+\renewcommand{\textfraction}{0.07}  % allow minimal text w. figs
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
 
 \begin{document}
 \maketitle
@@ -186,7 +202,15 @@ the radius is assumed small with respect to the segment lengths as well,
 so that the currents can be assumed to be axially directed; i.e., there
 are no azimuthal components of current.
 
-Figure~\eqref{fig1} gives the geometry of a typical, arbitrarily oriented
+\begin{figure}[htb]
+\centerline{\includegraphics{fig1.eps}}
+\caption{Definition of the position vectors with respect to the global
+origin O}
+\label{fig1}
+\end{figure}
+\afterpage\clearpage
+
+Figure~\ref{fig1} gives the geometry of a typical, arbitrarily oriented
 wire. Assume that the wire is straight, even though the theory applies
 equally to bent configurations. The same wire is also shown broken into
 segments or subsections.
@@ -307,7 +331,7 @@ j\omega\vect{A}(s_m)\cdot(\vect{r}_{m+1/2}-\vect{r}_{m-1/2})
 \end{equation}
 
 The currents are expanded in pulses centered at the junctions of
-adjacent segments as illustrated in Figure~\ref{fig2a}. Note that pulses
+adjacent segments as illustrated in figure~\ref{fig2}a. Note that pulses
 are omitted from the wire ends. This is equivalent to placing a half
 pulse of zero amplitude at each end, thus imposing the boundary
 condition for zero current at unattached wire ends. The current
@@ -320,13 +344,20 @@ I(s) = \sum_{n=1}^{N} I_n P_n (s)
 \end{equation}
 
 A difference approximation is applied to equation \eqref{eq3} to compute
-the charge. Thus, as shown in Figure~\ref{fig2b}, the charge can be
+the charge. Thus, as shown in Figure~\ref{fig2}b, the charge can be
 represented as pulses displaced from the current pulses by a half pulse
 width.
 
+\begin{figure}[htb]
+\centerline{\includegraphics{fig2.eps}}
+\caption{Wire segmentation scheme illustrating equally weighted pulses
+for current and charge}
+\label{fig2}
+\end{figure}
+
 Substituting \eqref{eq11} into \eqref{eq10} produces a system of
 equations that can be expressed in matrix form. Each matrix element,
-$Z_{mn}$, associated with the $n$-th current and the $s_m$ observation
+$Z_{mn}$, associated with the \mbox{$n$-th} current and the $s_m$ observation
 point involves scalar and vector potential terms with integrals of the
 form
 
@@ -374,11 +405,11 @@ where
 \[ \beta=\frac{2a}{\left(s_m-s^\prime)^2+4a^2[\right]^{1/2}}
 \]
 
-$F(\frac{\pi}{2}$ has an approximation (reference~\ref{r6}).
+$F(\frac{\pi}{2}$ has an approximation (reference~\cite{r6}).
 
 \begin{equation}
 \begin{aligned}
-F\left(\frac{\pi}{2}, \beta\right) \cong\ 
+F\left(\frac{\pi}{2}, \beta\right) \cong\
 & [a_0m + a_1m + a_2m^2 + a_3m^3] \cdot     \\
 & [b_0 + b1_m + b_2m^2 + b_3m^3]\ln(1/m)    \\
 \end{aligned}
@@ -578,6 +609,15 @@ techniques. MININEC(3) uses a triangular decomposition (LU
 decomposition) with the Gauss elimination procedure with partial
 pivoting (reference~\cite{r7}).
 
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig3.eps}}
+\caption{Variation of dipole admittance with wire radius for MININEC
+with and without the small radius correction. Data from King
+(references~\cite{r8} and~\cite{r9}) is also shown.}
+\label{fig3}
+\end{sidewaysfigure}
+\afterpage\clearpage
+
 \section{Wire Junctions}
 The theory developed thus far for straight wires is equally applicable
 to bent wires. However, for coding simplicity in MININEC, bent wires are
@@ -596,18 +636,18 @@ those aspects essential to the use of MININEC are discussed here.
 Consider a wire having no connections at either end. The wire is
 subdivided into segments and the current is expanded in pulses centered
 at adjacent segment junctions as described above and illustrated in
-Figure~\ref{fig4a}. The end points hav no pulses, or alternatively the
+Figure~\ref{fig4}a. The end points have no pulses, or alternatively the
 end points have half pulses with zero amplitude. A second wire is to be
 attached to one end of the first. The second wire is subdivided into
 segments with pulses for currents located as in the first case. However,
 a full pulse is located at the attachment end, with half the pulse
 extending onto wire two, and half onto wire one, as illustrated in
-Figure~\ref{fig4b}. The half on wire one assumes the dimensions (length
+Figure~\ref{fig4}b. The half on wire one assumes the dimensions (length
 and radius) of the half segment on wire one, while the half on wire two
 assumes the dimensions appropriate to wire two. Wire two overlaps onto
 wire one with a full pulse centered at the junction end. Note that the
 free end of the wire has a zero half pulse. A third wire may be assumed
-to also overlap onto wire one, as illustrated in Figure~\ref{4c}. It can
+to also overlap onto wire one, as illustrated in Figure~\ref{fig4}c. It can
 be shown (see references~\cite{r8} and~\cite{r9}) that for a junction of
 $N$ wires, only $N-1$ overlapping pulses are required to satisfy
 Kirchoff's current law. Alternatively, wire three could have overlapped
@@ -626,13 +666,19 @@ which the coordinates of a wire are specified. A positive wire current
 is from the end first specified, end one, towards the other end, end
 two. By use of Kirchoff's current law and the current reference
 direction, the currents at the junction can be found. For example,
-suppose the wires in Figure~\ref{fig4c} are all specified from left to
+suppose the wires in Figure~\ref{fig4}c are all specified from left to
 right. Let the pulse amplitudes for the first pulse on wires two and
 three be $I_2$ and $I_3$, respectively. Then the currents out of the
 junctions into wires two and three are the complex amplitudes of the
 first pules, the overlapping pulses, on wires two and three,
 respectively. Hence, the current on wire one into the junction is the
 sum of these currents; i.e., $I_1=I_2+I_3$.
+
+\begin{figure}[htb]
+\centerline{\includegraphics{fig4.eps}}
+\caption{Illustration of the overlap scheme used at multiple wire junctions}
+\label{fig4}
+\end{figure}
 
 MININEC(3) automatically determines, during geometry input, whether
 there is a connection on either end of a wire, and if so, to which wire
@@ -801,7 +847,7 @@ parallel to the appropriate vector component. The near magnetic field is
 then calculated using the MININEC current distribution and the
 difference between the appropriate components of the vector potential.
 
-The vector potential is generally defined such that 
+The vector potential is generally defined such that
 
 \begin{equation}
 \Hplus = \frac{1}{\mu}\nabla X\Aplus
@@ -961,7 +1007,7 @@ angle of incidence.
 The Fresnel reflection coefficients have not been applied to the MININEC
 current calculation. When a real ground is specified, the currents are
 calculated by using the perfectly conducting image theory (described in
-section~\ref{sec-groundplane}. The real ground corrections are applied
+section~\ref{sec-groundplane}). The real ground corrections are applied
 to the far field calculations only. This compromise is designed to keep
 MININEC relatively compact and provide accurate results whenever the
 ground directly beneath the antenna is a good conductor.
@@ -1018,13 +1064,19 @@ normal to the plane of incidence is
 \label{eq49}
 \end{equation}
 
-as may be seen in Figure~\ref{fig5c}. In addition, the $\vect{r}_0$
+as may be seen in Figure~\ref{fig5}c. In addition, the $\vect{r}_0$
 vector, pointing in the observation direction, is
 
 \begin{equation}
 \vect{r}_0 = (\sin\theta\cos\phi, sin\theta\sin\phi, \cos\theta)
 \label{eq50}
 \end{equation}
+
+\begin{figure}[htb]
+\centerline{\includegraphics{fig5.eps}}
+\caption{Definition of position vectors for Fresnel reflection coefficient}
+\label{fig5}
+\end{figure}
 
 To obtain the far fields, the integral in equation~\eqref{eq40} implies
 the summation over all the current pulses. For the direct field, the
@@ -1097,6 +1149,7 @@ $e^{-jkr} / r$ term is set to unity. The total resulting field is used
 in equation~\eqref{eq43} to calculate the power gain.
 
 \section{Validation and Modeling Guidance}
+\label{sec-validation}
 The solution to an antenna problem generated by a method of moments
 computer program is, at best, an approximation. How close the solution
 is to reality depends in part on (1) the numerical methods employed in
@@ -1134,6 +1187,54 @@ from comparisons with measured data or analytical solutions (when
 available). In this manner, modeling guidelines are derived and updated
 from simpler antenna problems for which there is reliable measured data
 or generally accepted theoretical data.
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig6.eps}}
+\caption{Convergence test for an electrically short dipole when
+admittance is given (Part a)}
+\label{fig6}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig7.eps}}
+\caption{Convergence test for an electrically short dipole showing the
+percent difference in admittance between MININEC and R. W. P. King
+(references~\cite{r8} and~\cite{r9}) (Part b)}
+\label{fig7}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig8.eps}}
+\caption{Convergence test for a half wave dipole when admittance is
+given (Part a)}
+\label{fig8}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig9.eps}}
+\caption{Convergence test for a half wave dipole showing the percent
+difference in admittance between MININEC and R. W. P. King
+(references~\cite{r8} and~\cite{r9}) (Part b)}
+\label{fig9}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig10.eps}}
+\caption{Convergence test for an antiresonant dipole when admittance is
+given (Part a)}
+\label{fig10}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig11.eps}}
+\caption{Convergence test for an antiresonant dipole showing the percent
+difference in admittance between MININEC and R. W. P. King
+(references~\cite{r8} and~\cite{r9}) (Part b)}
+\label{fig11}
+\end{sidewaysfigure}
+
+\afterpage\clearpage
+
 
 \subsection{Dipole Antennas}
 The theoretical behavior of the dipole antenna has been studied
@@ -1304,6 +1405,7 @@ $10^{-2}$ wave lengths in circumference. This corresponds to a loop 18
 inches in diameter at 2~MHz (about the size of a basketball goal).
 
 \subsection{Monopoles and Antennas Above Ground}
+\label{sec-monopoles}
 Simply stated, an antenna above a perfectly conducting ground plane is
 equivalent to the original antenna and its mirror image in free space.
 Hence, all the modeling results and guidelines presented so far are
@@ -1559,6 +1661,704 @@ MININEC, too, will expand in capability. In the meantime, MININEC is
 appropriate for application to small problems (less than 100 segments).
 Larger problems should be solved with NEC on an appropriate size
 computer.
+
+\section{Examples and User Guidance}
+This section is intended to be used both as a reference and as a means
+for first-time users to become familiar with the input and output (I/O)
+options of MININEC. The first-time user should spend a few minutes at
+the computer terminal while following along with the simple two-wire
+example in section~\ref{sec-getting-started}. A few more minutes at the
+terminal (perhaps with a simpler four segment dipole) exploring all of
+the MININEC options should be enough to master this skill. However, the
+art of actually modeling a wire antenna, i.e., composing the model and
+properly interpreting MININEC output, is acquired through considerable
+study of antenna theory and properties, study of the data of
+section~\ref{sec-validation}, and equally important, accumulating
+experience by using MININEC.
+
+\subsection{Getting Started}
+\label{sec-getting-started}
+First, gather up all known information on the antenna to be modeled,
+including measurements or reliable analytical data, if available. It is
+helpful to make a sketch of the antenna using any convenient cartesian
+coordinate system. For this example, please consider the interted
+L-antenna in Figure~\ref{fig41}. You will need to know the X, Y, Z
+location for each wire end of each wire relative to the origin of your
+choice. And you will need to know the radius of each wire. All
+dimensions must be in meters. This information for the example can be
+found in Figure~\ref{fig44}.
+
+You will need to decide how many segments to use on each wire. This may
+be done initially by calculating the length of each wire in wave lengths
+at the desired frequency. Then refer to Figures~\ref{fig6}
+through~\ref{fig11} as appropriate for the initial choice. This will not
+guarantee that the MININEC solution will be well converged, but it
+provides a good place to start. A convergence test is always a good
+idea. A possible segmentations scheme for the inverted L-antenna is
+suggested in Figure~\ref{fig44}. Alternatively, using your prior
+experience on a similar antenna, you may be able to come closer to the
+converged solution the first time. For example, the inverted L-antenna
+is one wire short of being a Tee-antenna similar to the ones in
+section~\ref{sec-monopoles} (see Figures~\ref{fig28} through~\ref{fig31}).
+For the purpose of this discussion, however, we will use a minimal
+number of segments in order to keep the solution time reasonably short.
+
+MININEC is designed for demand mode execution. Therefore, all you need
+to do is answer the questions when prompted or provide the required data
+appropriately. In general, you must define the antenna geometry and
+define the environment. MININEC can then solve for the currents. Once
+MININEC has the solution, you may then request near and far fields
+(patterns).
+
+\noindent Now run MININEC. The first question you must answer is:
+
+\begin{Verbatim}
+OUTPUT TO CONSOLE, PRINTER, OR DISK (C/P/D)?
+\end{Verbatim}
+
+If you enter \verb+C+ for console, all data will be displayed on the
+monitor. If you answer \verb+P+ for printer, the questions or prompts
+will still be displayed on the monitor, but all other data will be
+printed. If you answer \verb+D+ for disk, you will then be prompted to
+supply the name of a disk file for storage of all MININEC output:
+
+\begin{Verbatim}
+OUTPUT TO CONSOLE, PRINTER, OR DISK (C/P/D)?  D
+FILENAMES (NAME.OUT)?
+\end{Verbatim}
+
+As with the printer, all questions and prompts appear on the monitor,
+but the results go to the file you specify.
+
+Next you must supply the frequency in MHz. Enter the desired frequency
+or simply enter return to select the default value of 299.8 MHz (or a
+wave length of one meter).
+
+\begin{Verbatim}
+FREQUENCY (MHz)=
+    WAVE LENGTH = 1 METER
+\end{Verbatim}
+
+For the next question, you must select free space or a ground plane by
+entering 1 or -1, respectively.
+
+\begin{Verbatim}
+ENVIRONMENT (+1 FOR FREE SPACE, -1 FOR GROUND PLANE)?
+\end{Verbatim}
+
+If you select -1 for ground, you are then prompted for the number of
+media, which must be an integer from zero to 5.
+
+\begin{Verbatim}
+ENVIRONMENT (+1 FOR FREE SPACE, -1 FOR GROUND PLANE)?  -1
+ NUMBER OF MEDIA (0 FOR PERFECTLY CONDUCTING GROUND)?
+\end{Verbatim}
+
+A zero selects a perfectly conducting ground plane. See
+Section~\ref{sec-change-env} for further details. Suffice to say at this
+point that selection of 1 to 5 media does not effect the current
+distribution or the antenna impedance, but only effects far field
+calculations. Please select a zero to continue along with this
+narrative.
+
+Next, you must specify the number of wires\footnote{Note to NEC users:\\
+The MININEC post processor program is used to convert a NEC input data
+set into a MININEC antenna geometry description. These data are
+automatically stored in the \texttt{MININEC.INP} file. At this point, in
+the \texttt{MININEC.INP} file is not empty, MININEC will use that data for
+the geometry description and you will skip the normal geometry input.
+See Appendix~\ref{sec-appendix-a} for further information.}. If you
+specify more than the number allowed, a warning message appears and the
+question is repeated.
+
+\begin{Verbatim}
+NO. OF WIRES?  100
+NUMBER OF WIRES EXCEEDS DIMENSION. . .
+NO. OF WIRES?
+\end{Verbatim}
+
+\noindent A zero will place you at the main menu.
+
+\begin{Verbatim}
+NO. OF WIRES?  0
+
+********************    MININEC MENU    ********************
+   G - CHANGE GEOMETRY     C - COMPUTE/DISPLAY CURRENTS
+   E - CHANGE ENVIRONMENT  P - COMPUTE FAR-FIELD PATTERNS
+   X - CHANGE EXCITATION   N - COMPUTE NEAR-FIELDS
+   L - CHANGE LOADS/NET    Q - QUITS
+   F - CHANGE FREQUENCY
+************************************************************
+   COMMAND?
+\end{Verbatim}
+
+\noindent To recover from this point, select \verb+G+ for change
+geometry and answer the questions on environment again.
+
+\begin{Verbatim}
+NO. OF WIRES?  0
+
+********************    MININEC MENU    ********************
+   G - CHANGE GEOMETRY     C - COMPUTE/DISPLAY CURRENTS
+   E - CHANGE ENVIRONMENT  P - COMPUTE FAR-FIELD PATTERNS
+   X - CHANGE EXCITATION   N - COMPUTE NEAR-FIELDS
+   L - CHANGE LOADS/NET    Q - QUITS
+   F - CHANGE FREQUENCY
+************************************************************
+   COMMAND?  G
+
+ENVIRONMENT (+1 FOR FREE SPACE, -1 FOR GROUND PLANE)?  -1
+ NUMBER OF MEDIA (0 FOR PERFECTLY CONDUCTING GROUND)?  0
+
+NO. OF WIRES?
+\end{Verbatim}
+
+Let's assume two wires. The next prompt is for the number of segments on
+wire~1.
+
+\begin{Verbatim}
+WIRE NO. 1
+    NO. OF SEGMENTS?
+\end{Verbatim}
+
+You will be prompted for each wire in turn. If you answer zero, you will
+return to the question for the number of wires. This is a convenient
+escape mechanism, sometimes useful when you change your mind.
+
+\begin{Verbatim}
+WIRE NO. 1
+    NO. OF SEGMENTS?  0
+
+NO. OF WIRES?  2
+
+WIRE NO. 1
+    NO. OF SEGMENTS?
+\end{Verbatim}
+
+If at any time you specify too many segments on any one wire, or the
+total number of segments on all wires specified becomes larger than the
+maximum allowed by the program array dimensions, an error message will
+be displayed, and you will return to the question for the number of
+wires. In this case, to keep this session short, let's choose 4~segments
+for wire~1.
+
+Next, enter the X, Y, Z coordinates, in meters, for end one of the first
+wire. Then enter the X, Y, Z coordinates for end two; then enter the
+radius, as prompted.
+
+\begin{Verbatim}
+NO. OF SEGMENTS?  4
+END ONE COORDINATES (X,Y,Z)?  0,0,0
+END TWO COORDINATES (X,Y,Z)?  0,0,.191
+                     RADIUS?  .004
+            COORDINATES                                 END         NO. OF
+   X             Y             Z          RADIUS     CONNECTION     SEGMENTS
+0             0              0                          -1
+0             0             .091          .004           0             4
+   CHANGE WIRE NO.  1  (Y/N)?
+\end{Verbatim}
+
+After entry of the radius, MININEC responds immediately with a table as
+shown above. The table gives the coordinates of the wire ends, the
+radius and the end connection information, so you may verify that you
+have entered the data correctly. If not, you have the opportunity to
+start again with this wire. Otherwise, you may continue to the next
+wire. The end connection information is useful to verify that a
+connection has been made. In this case, the minus one indicates that end
+one in connected to ground. A connection to ground is indicated by a
+negative integer, whose absolute value is the same as the wire number.
+The zero indicates that end two of this wire is not yet connected to any
+other wire.
+
+Now continue on to the next wire and give the appropriate data:
+
+\begin{Verbatim}
+CHANGE WIRE NO.  1  (Y/N)?  N
+
+WIRE NO. 2
+   NO. OF SEGMENTS?  6
+   END ONE COORDINATES (X,Y,Z)?  0,0,.191
+   END TWO COORDINATES (X,Y,Z)?  0,.309,.091
+                           RADIUS?  .004
+            COORDINATES                                 END         NO. OF
+   X             Y             Z          RADIUS     CONNECTION     SEGMENTS
+0             0              .191                         1
+0             0              .091          .004           0            6
+CHANGE WIRE NO.  2  (Y/N)?
+\end{Verbatim}
+
+The connection data indicates that end one of wire two is connected to
+the top of wire one, i.e., end two of wire one. The absolute value of
+the end connection integer is the wire number to which wire two is
+connected. A plus sign indicates an end one connected to an end two (as
+in this case), or an end two connected to an end one. A negative sign
+indicates and end one connected to an end one, or an end two connected
+to an end two. And, of course, a zero means no connection.
+
+By the way, if you happen to give either wire end a negative
+Z-coordinate when a ground plane is specified, you will get an error
+message and will have to reconsider your entry. Likewise, MININEC will
+not let you get away with a zero radius, or a zero wire length.
+
+If you are now satisfied with the wire two data entry, we may proceed.
+MININEC will produce a table of the coordinates for the location of each
+current pulse on each wire. Note that the radius and connection data are
+also given so tht you may verify your data entry.
+
+\begin{Verbatim}
+CHANGE WIRE NO.  2  (Y/N)?  N
+
+                  **** ANTENNA GEOMETRY ****
+
+WIRE NO.  1  COORDINATES                                CONNECTION PULSE
+X             Y             Z             RADIUS        END1 END2  NO.
+ 0             0             0             .004          -1    1    1
+ 0             0             .04775        .004           1    1    2
+ 0             0             .0955         .004           1    1    3
+ 0             0             .14325        .004           1    0    4
+
+WIRE NO.  2  COORDINATES                                CONNECTION   PULSE
+X             Y             Z             RADIUS        END 1 END 2  NO.
+ 0             0             .191          .004           1     2      5
+ 0             .0515         .191          .004           2     2      6
+ 0             .103          .191          .004           2     2      7
+ 0             .1545         .191          .004           2     2      8
+ 0             .206          .191          .004           2     2      9
+ 0             .2575         .191          .004           2     0     10
+
+CHANGE GEOMETRY (Y/N)?
+\end{Verbatim}
+
+This table is essential to proper location of the feed point (or source
+excitation point) and location of loads.
+
+You now have one last chance to change the geometry before proceeding.
+
+\begin{Verbatim}
+CHANGE GEOMETRY (Y/N)?  N
+
+NO. OF SOURCES?
+\end{Verbatim}
+
+You must now decide how many feed points to use, where they are located,
+and what voltages are applied. You will be prompted for this data for
+each source, in turn. In this case, let's keep it simple.
+
+\begin{Verbatim}
+NO. OF SOURCES?  1
+
+SOURCES NO. 1:
+PULSE NO., VOLTAGE MAGNITUDE, PHASE (DEGREES)?  1,1,0
+\end{Verbatim}
+
+Sources are always co-located with current pulse functions. Hence, you
+may have to refer to the above table of antenna geometry to select an
+appropriate pulse to apply the source. In this example, the source is at
+the ground plane, i.e., pulse number one, located on wire one. I have
+chosen one volt at zero degree phase angle for this example.
+
+The next set of questions provide the opportunity to add impedance
+loading to the antenna. To keep things simple, let's avoid loading and
+continue on. Please refer to section~\ref{sec-loads} for more detailed
+information on loading options.
+
+\begin{Verbatim}
+NUMBER OF LOADS?  0
+
+********************    MININEC MENU    ********************
+   G - CHANGE GEOMETRY     C - COMPUTE/DISPLAY CURRENTS
+   E - CHANGE ENVIRONMENT  P - COMPUTE FAR-FIELD PATTERNS
+   X - CHANGE EXCITATION   N - COMPUTE NEAR-FIELDS
+   L - CHANGE LOADS/NET    Q - QUITS
+   F - CHANGE FREQUENCY
+************************************************************
+   COMMAND?
+\end{Verbatim}
+
+You are now faced with the main menu again. By selection of an
+appropriate command letter, you may change the geometry(\verb+G+),
+change the environment (\verb+E+), change the source or excitation
+(\verb+E+), change the loads and networks (\verb+L+), and change the
+frequency. When satisfied with the antenna geometry and environment, you
+are ready to determine the antenna properties. The preferred choice at
+this point is \verb+C+, compute and display the currents. If you select
+\verb+P+ for patterns or \verb+N+ for near fields, MININEC will check to
+see if the currents have been calculated; if not, MININEC will compute
+the currents before you can proceed. So let's select \verb+C+.
+
+\begin{Verbatim}
+   COMMAND?  C
+
+   BEGIN MATRIX FILL
+   MATRIX FILL 10% COMPLETE - APPROX TIME REMAINING 1:48
+\end{Verbatim}
+
+MININEC responds almost immediately with an estimate of the time in
+minutes and seconds required to complete filling the impedance matrix.
+At intervals, the estimate will be updated and the total time will be
+given when this step is completed. Similarly, MININEC will estimate the
+time to solve the matrix for the currents and in turn display the total
+times.
+
+\begin{Verbatim}
+   BEGIN MATRIX FILL
+   MATRIX FILL 100% COMPLETE - APPROX TIME REMAINING 0:00
+   FILL MATRIX:  1:27
+
+   FACTOR MATRIX 100% COMPLETE - APPROX TIME REMAINING 0:00
+   FACTOR MATRIX:  0:04
+\end{Verbatim}
+
+When the solution is complete, MININEC computes and displays the
+impedance and power input for each source in turn. If there is more than
+one source, the sum total power input will also be displayed. The
+solution is also displayed in terms of the current distribution, wire by
+wire.
+
+\begin{Verbatim}
+********************    SOURCE DATA     ********************
+PULSE  1      VOLTAGE = ( 1 , 0 J)
+              CURRENT = ( 9.852278E-04 , 1.479977E-03 J)
+              IMPEDANCE = ( 311.6818 , -468.1982 J)
+              POWER =  4.926139E-04  WATTS
+
+********************    CURRENT DATA    ********************
+
+WIRE NO.  1:
+PULSE        REAL          IMAGINARY     MAGNITUDE     PHASE
+NO.          (AMPS)        (AMPS)        (AMPS)        (DEGREES)
+ 1           9.852278E-04   1.479977E-03  1.777922E-03  56.3481
+ 2           .000962       -7.880544E-04  1.243573E-03 -39.32376
+ 3           8.940962E-04  -2.186383E-03  2.362143E-03 -67.75855
+ 4           7.867739E-04  -3.248648E-03  3.342563E-03 -76.38595
+J            6.45715E-04   -3.943692E-03  3.996205E-03 -80.70126
+
+WIRE NO.  2:
+PULSE        REAL          IMAGINARY     MAGNITUDE     PHASE
+NO.          (AMPS)        (AMPS)        (AMPS)        (DEGREES)
+J            6.45715E-04   -3.943692E-03  3.996205E-03 -80.70126
+ 6           5.160325E-04  -4.466384E-03  4.496095E-03 -83.40944
+ 7           3.756805E-04  -4.519859E-03  4.535446E-03 -85.24862
+ 8           2.408057E-04  -4.093055E-03  4.100132E-03 -86.633
+ 9           1.252218E-04  -3.201494E-03  3.203942E-03 -87.76009
+ 10          4.12146E-05   -1.891714E-03  1.892163E-03 -88.75189
+E            0              0             0             0
+
+SAVE CURRENTS TO A FILE (Y/N)?
+\end{Verbatim}
+
+Notice that the current is zero at the free end of wire two. And since
+there is no pulse number, an \verb+E+ is displayed to help identify a
+free end. Kirchoff's current law has been used to solve for the currents
+on each respective wire at the junction. And a \verb+J+ is substituted
+for the pulse number, indicating a wire junction or connection point.
+
+Notice that the real part of the impedance, the resistance, is within
+19\% of the measured value given by Prasad, reference~\cite{r18}, (see
+the data in Figure~\ref{fig44}) and the reactance is within 2.4\%. When
+I tried the convergence test suggested by the scheme in Figure~\ref{fig44},
+MININEC was pretty well converged at 30 segments to an impedance of
+167 + j395 ohms. Prasad used an approximate method to correct her
+measured data for the loading effects of the coaxial termination at the
+feed point. I suspect the method may not be sufficiently accurate in
+this case.
+
+You must now decide whether to save the currents to a disk file. If you
+answer \verb+Y+, you will be prompted for a disk file name and the
+currents will be saved. If not, you will return to the main menu.
+
+\begin{Verbatim}
+SAVE CURRENTS TO A FILE (Y/N) ? N
+
+********************    MININEC MENU    ********************
+   G - CHANGE GEOMETRY     C - COMPUTE/DISPLAY CURRENTS
+   E - CHANGE ENVIRONMENT  P - COMPUTE FAR-FIELD PATTERNS
+   X - CHANGE EXCITATION   N - COMPUTE NEAR-FIELDS
+   L - CHANGE LOADS/NET    Q - QUITS
+   F - CHANGE FREQUENCY
+************************************************************
+   COMMAND?
+\end{Verbatim}
+
+If you decide that you want to look at the impedance or currents again,
+you simply chose \verb+C+. There is no wait this time because MININEC
+does not re-compute and solve the matrix. You will get an immediate
+display of the impedance and currents.
+
+You may now elect to calculate patterns or near fields. Please refer to
+the appropriate sections for details on these operations.
+
+Good luck!
+
+\subsection{Change Geometry}
+The \verb+G+ option on the MININEC menu provides the means to change the
+antenna configuration without changing the frequency. The entry point is
+the question to choose the environment, free space or ground. Please see
+section~\ref{sec-env} for details. After choosing the environment, you
+will begin defining the wire configuration, i.e., specify the number of
+wires and the location, radius and segmentation for each wire. Please
+see section~\ref{sec-getting-started} for an example.
+
+\subsection{Change Environment}
+\label{sec-change-env}
+The \verb+E+ option on the MININEC menu provides the means to change the
+antenna environment, without changing the frequency, feed point, loading
+or geometry. Note that changing from free space to a ground plane does
+not change the connection data or location of wires already specified.
+Hence, erroneous and strange results may occur if the geometry is not
+also changed appropriately.
+
+Selecting free space will return you to the main menu.
+
+If you choose a ground plane, you may specify 0 for perfectly conducting
+ground or you may select up to 5 changes in surface impedance (up to 5
+media). Changing the surface impedance does not alter the current
+distribution on antennas over ground. MININEC uses the surface impedance
+to correct far field pattern only. If you select 1 surface impedance,
+you will be prompted for the relative dielectric constant and the
+conductivity, in mhos per meter. The far field subroutine will use this
+information in a Fresnel reflection coefficient correction to the
+radiation fields.
+
+For two or more impedance surfaces, you must choose between a linear or
+circular boundary between surfaces. The linear boundary is parallel to
+the Y-axis. The circular boundary is centered at the origin. The first
+surface (and the perfectly conducting ground plane) is always at the
+level of the X-Y plane (Z=0). For each surface in turn, you must specify
+the height of the surface (or media) relative to the first surface. A
+negative value is a step down; a positive value is a step up. A zero
+value means a flat ground. Note that there is no diffraction coefficient
+correction in MININEC for a cliff edge. There is also no correction for
+blockage due to a large step up, i.e., the antenna cannot be in a well.
+For each media in turn, you must supply the distance in meters from the
+origin to the media boundary.
+
+When you choose a circular boundary with two or more media, you will be
+prompted for the number of radial wires in the ground screen. This
+approximation is really accurate for dense ground screens only. One
+hundred or more should be used for best results. Zero, of course, is
+also a valid choice. You must also supply the wire radius of the wires
+in the ground screen. The length of the wires in the ground screen is
+the same as the distance to the interface between media one and two.
+
+\subsection{Change Excitation}
+The \verb+X+ option in the MININEC menu provides the means to change the
+antenna feed excitation (i.e., number of feeds, feed location and
+magnitude and phase) without changing the geometry, environment,
+frequency or loading. Changing only the excitation does not require
+re-filling or re-factoring of the matrix. Hence, after solving for the
+currents for the initial excitation, you can rapidly try oout all
+possible source locations or try multiple source excitation. Source
+locations must coincide with the locations of the current pulse
+functions. You cannot put source excitations on non-existent pulses. At
+least one source must be given. MININEC will not allow more sources than
+the maximum set by the dimension statement (see the first 30~lines of
+MININEC to determine this limit).
+
+There is but one source model in MININEC. The model imposes a constant
+field over a pulse width, with amplitude and location, coincident with a
+current pulse, chosen by the user. In spite of the simplicity, this
+source model is a good approximation for most transmit cases. What do
+you do then to evaluate the performance of a receive only antenna? One
+way to evaluate the receive properties of an antenna is to place a
+transmitting dipole at a great distance (i.e., in the far field of the
+receive antenna). The field incident on the receive antenna is a good
+approximation to a plane wave.
+
+\subsection{Change Loads}
+\label{sec-loads}
+The \verb+L+ option on the MININEC menu provides the means to alter or
+add lumped parameter loads to an antenna. Changing the load requires
+re-filling and re-factoring of the matrix. Each load location must
+coincide with a current pulse function. MININEC will not allow more
+loads than the maximum for which it is dimensioned (see the first
+30~lines of MININEC to determine this limit). There are two kinds of
+loads; impedance loading and S-parameter loading. You may select the
+loading type when prompted after specifying the number of loads.
+
+The simplest load type is impedance loading. You must supply the pulse
+location, resistance and reactance for each load, in turn. The reactance
+value you specify will not change when you change the frequency. If you
+desire the load impedance to change appropriately with frequency, you
+must change teh impedance load every time you change frequency.
+Alternatively, you may specify your load in terms of an equivalent
+S-parameter function.
+
+One convenient method of circuit analysis makes use of the concept of a
+complex frequency, or S-paramter. Generally, $S$ is defined as
+$S=G+\jj\omega$ where $G$ is the neper frequency and $\omega$ is the
+angular frequency (reference~\cite{r24}). For steady state, sinusoidal
+time varying signals, $G=0$.
+
+The impedance of an RLC circuit can always be expressed as a function of
+$S$. With a little bit of algebra, the impedance can be represented as a
+ratio of polynomials in $S$. The S-parameter impedance function is a
+polynomial in $S$ with the form:
+
+\[ Z(S) = \frac{A_0S^0+A_1S^1+A_2S^2+\ldots A_nS^n}
+               {B_0S^0+B_1S^1+B_2S^2+\ldots B_mS^m}
+\]
+
+where the coefficients $A_i$ and $B_i$ are functions of R, L and C. For
+example a series RC circuit has an impedance of
+
+\[ Z = R + \frac{1}{j\omega C} = R + \frac{1}{SC} = \frac{RC+1}{CS}
+\]
+
+hence
+\[A_0 = RC + 1 \]
+
+\[A_1 = 0 \mbox{for }i > 0 \]
+
+and
+
+\[B_0 = 0\]
+
+\[B_1 = C\]
+
+\[B_i = 0 \mbox{for }i>1\]
+
+When you select the S-parameter load option, you will be prompted for
+the pulse number (at which to locate each load) and the order of the
+S-parameter impedance function. The order is the highest exponent of $S$
+occurring in either the numerator or denominator. For the example cited
+above, the order is one. After supplying these two numbers, you will be
+prompted for the magnitude of teh coefficients of $S$ in order, starting
+with the order zero and up to the order you have specified. The
+coefficients are given in pairs, i.e., numerator and denominator for
+each order.
+
+The advantage of the S-parameter load is that the impedance changes
+appropriately with frequency. Each time you change frequency, you need
+not re-specify the load. Almost any series-parallel combination of RLC
+elements can be expressed in terms of a polynomial in $S$, with a little
+bit of algebraic effort.
+
+\subsection{Change Frequency}
+The \verb+F+ option on the MININEC menu provides a way to alter the
+frequency. You will be prompted for the frequency in MHz. MININEC will
+compute and display the wave length and return to the menu. Changing the
+frequency will require re-filling and re-factoring of the impedance
+matrix. The current geometry will be used.
+
+\subsection{Compute/Display Currents}
+The \verb+C+ option on the MININEC menu triggers filling and factoring
+of the matrix for the antenna configuration most recently specified. If
+a solution has already been computed, and no changes have been made to
+the environment, excitation, loads and frequency, then the \verb+C+
+option will simply display the impedance and current distribution.
+
+\subsection{Compute Far Field Patterns}
+The \verb+P+ option on the MININEC menu is used to specify the far field
+pattern calculation. If the currents have not already been computed,
+they will be computed before you can proceed. You may choose to compute
+the patterns in dBi, i.e., in dB above an isotropic radiator, or in
+volts per meter, i.e., the electric field.
+
+When you choose dBi, you are prompted for the zenith angle and the
+azimuth angle. In each case you must supply three numbers, the initial
+angle, the angle increment and the number of angles. If you specify zero
+for the number of angles, one is assumed. The zenith and azimuth angles
+are the theta and phi angles, respectively, as shown in Figure~\ref{fig45}.
+When the patterns are calculated in dBi, the $e^{-jkR}/R$ dependence of
+the far field is suppressed, i.e., the pattern is at infinite range.
+
+When you choose to compute the patterns in volts per meter (i.e., the
+electric field strength), the power (radiated) level is displayed and
+you are prompted to change this level. The fields will be scaled to the
+level you specify. Next, you must specify the range in meters. If you
+specify zero, the $e^{-jkr}/R$ dependence is suppressed. For accuracy,
+be sure the range you specify is sufficient for the far field.
+
+For both dBi and volts per meter, you will be prompted to save the
+pattern data. When you answer yes, you are prompted for a file name. The
+pattern data will be saved as ASCII images in this file. You may use an
+editor or the MININEC post processor to prepare this data for plotting
+(see Appendix~\ref{app-B}.
+
+\subsection{Compute Near Fields}
+The \verb+N+ option on the MININEC menu is used to specify the location
+of points for calculation of the near electric and magnetic fields. If
+the currents have not already been computed, they will be computed
+before you can proceed. You must choose electric or magnectic fields.
+Then you will be prompted for the field location in cartesian
+coordiantes. You are prompted for the initial coordinate, the increment
+and the number of steps for each of the principle directions. All
+dimensions must be in meters. Next, the radiated power level is
+displayed and you are given a chance to change this level. The near
+fields will be scaled to the power level you specify. If you specify
+zero, the original power level will be used. You will also be prompted
+to save the near field data. The field data will be stored in the disk
+file you specify. Use \verb+MMPOST+ (see Appendix~\ref{app-B}) or an
+editor of your choice to process this data for plotting.
+
+\subsection{Quit}
+The \verb+Q+ option on the MININEC menu provides a clean and efficient
+termination of the MININEC session.
+
+\appendix
+\section{A Pre-Processor for MININEC}
+\verb+MNPRE.BAS+ converts NEC input data sets to MININEC geometry
+specifications. First prepare an input data file suitable for NEC (see
+reference~\cite{r5} for instructions). Then run \verb+MNPRE.BAS+.
+\verb+MNPRE.BAS+ will prompt you for a disk file name containing the NEC
+data set. It will convert the geometry portion of the NEC data set into
+the geometry specifications required by MININEC and write the results
+into a binary file named \verb+MININEC.INP+. When you run MININEC, it
+will check \verb+MININEC.INP+ for data. If empty, data entry is normal
+keyboard entry. If not empty, MININEC will read the data and display the
+segmentation data. The MININEC session will then proceed as normal
+starting with the question:
+
+\begin{Verbatim}
+CHANGE GEOMETRY (Y/N)?
+\end{Verbatim}
+
+A source listing of \verb+MNPRE.BAS+ follows:
+
+\section{A Post-Processor MININEC}
+\verb+MNPOST.BAS+ processes MININEC output data for plotting using the
+\verb+GRAPS+ program (See NOSC TD 820, ``GRAPS: Graphical Plotting
+System'' by R. T. Laird, July 1985). You may store MININEC currents,
+near fields and pattern data in a file of your choice. Election to store
+output data in disk files is accomplished during a MININEC session.
+\verb+MNPOST.BAS+ will read these files and prompt you for the data to
+be plotted. \verb+MNPOST.BAS+ will recognize the type of data and
+display it for your convenience. After you have chosen the data for
+plotting, the minimum and maximum values are computed and displayed. You
+will be prompted to adjust the scale limits or use these values. Then
+the data will be written to a file you designate in the format required
+by \verb+GRAPS+. A program listing of \verb+MNPOST.BAS+ follows:
+
+\section{MININEC Program Listing}
+MININEC Compilation
+
+\newcommand{\slashbreak}{\discretionary{/}{}{/}}
+Fastest run times for MININEC3 have been achieved using
+87BASIC\slashbreak{}INLINE(TM), MicroWay's BASIC compiler post processor
+which generates in-line 8087 code for all floating point expressions.
+The following table gives some ideas of the difference in run times for
+the matrix fill in the sample problem in NOSC TD 516, Appendix B.
+
+\begin{table}[h]
+\begin{tabular}{lr}
+BASICA Interpreter & 4 1/2 hours \\
+IBM BASIC Compiler & 22 minutes  \\
+87BASIC Compiler   &  8 minutes  \\
+87BASIC/INLINE     &  4 minutes  \\
+\end{tabular}
+\end{table}
+
+87BASIC/INLINE is available from MicroWay, P.O. Box 79, Kingston, Mass.
+02364 Phone (617) 746-7341. The current price of the package is two
+hundred dollars.
+
+MININEC3.BAS may be run with the BASICA Interpreter, but the maximum
+number of pulses must be reduced to 42 with 10 wires. A maximum of 50
+wires and 50 pulses may be used with the IBM BASIC Compiler. The other
+compilers allow 70 pulses.
+
+A program listing dimensioned for the IBM BASIC Compiler follows:
 
 \bibliography{mininec}
 \end{document}

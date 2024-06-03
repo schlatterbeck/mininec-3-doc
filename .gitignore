@@ -3,4 +3,8 @@
 *.dvi
 *.bbl
 *.blg
+*.pdf
+*.ppm
+*.eps
+*.ps
 .*.swp
