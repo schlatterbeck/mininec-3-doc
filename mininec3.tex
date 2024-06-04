@@ -1509,6 +1509,64 @@ limit for MININEC (on a 16-bit, single precision microcomputer) of
 $10^{-2}$ wave lengths in circumference. This corresponds to a loop 18
 inches in diameter at 2~MHz (about the size of a basketball goal).
 
+% unreadable: figure caption
+% unreadable: figure table entries on left side
+\begin{figure}[htb]
+\begin{center}
+\includegraphics{fig28.eps}\\
+\ \\
+\begin{tabular}{r|r|r|r}
+$K_0h$ & $h/\lambda$ & $\ell/\lambda$ \\[3pt]
+\cline{1-3}
+       &             &                    \\[-8pt]
+0.2    & 0.03183099  & 0.2181690          \\
+0.5    & 0.07957747  & 0.1704225          \\
+\multicolumn{4}{c}{}               \\
+                                   &
+                                   &
+\multicolumn{1}{c|}{Horizontal}    &
+                                   \\
+\multicolumn{1}{c|}{$K_0h$}        &
+\multicolumn{1}{c|}{Vertical Wire} &
+\multicolumn{1}{c|}{Wire}          &
+\multicolumn{1}{c}{Total}          \\
+                                   &
+\multicolumn{1}{c|}{Segments}      &
+\multicolumn{1}{c|}{Segments}      &
+\multicolumn{1}{c}{Segments}       \\
+\hline
+0.2 &  1  &  7 & 15 \\
+    &  2  & 14 & 30 \\
+    &  3  & 21 & 45 \\
+    &  4  & 28 & 60 \\
+\hline
+0.5 &  1  &  2 &  5 \\
+    &  2  &  4 & 10 \\
+    &  3  &  6 & 15 \\
+    &  4  &  8 & 20 \\
+    &  5  & 10 & 25 \\
+    &  6  & 12 & 30 \\
+    & 14  & 14 & 42 \\
+\end{tabular}
+\end{center}
+\caption{[\ldots] TEE antenna. Dimensions for two designs are given [\ldots]
+segmentation scheme for convergence testing}
+\label{fig28}
+\end{figure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig29.eps}}
+\caption{Convergence test for a TEE antenna with $K_0 h = .2$}
+\label{fig29}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig30.eps}}
+\caption{Convergence test for a TEE antenna with $K_0 h = .5$}
+\label{fig30}
+\end{sidewaysfigure}
+\afterpage\clearpage
+
 \subsection{Monopoles and Antennas Above Ground}
 \label{sec-monopoles}
 Simply stated, an antenna above a perfectly conducting ground plane is
@@ -1522,7 +1580,7 @@ possible.
 
 Figure~\ref{fig28} illustrates the geometry of a TEE-antenna. The
 antenna is driven or fed at its base from a coaxial termination at the
-ground plane. The dimensions for two Tee-antenna designs ($K_0 h = .2$
+ground plane. The dimensions for two TEE-antenna designs ($K_0 h = .2$
 and $K_0 h = .5$) are also given. A convergence test was performed for
 each antenna using the segmentation scheme in the table. The results of
 these tests are given in Figures~\ref{fig29} and~\ref{fig30} for
@@ -1530,6 +1588,26 @@ $K_0 h = .2$ and $K_0 h = .5$, respectively. A comparison of the
 ``best'' results to the measurements of Prasad and King
 (references~\cite{r18}) for MININEC and several other codes is given in
 Figure~\ref{fig31}.
+
+\begin{figure}[htb]
+\begin{tabular}{lll}
+\multicolumn{2}{l}{\quad Radius of Wire = $0.004/\lambda$}  \\
+\multicolumn{2}{l}{\quad $k_0 = (h + l) = \pi/2$}           \\
+         & $\frac{2\pi h}{\lambda}=0.2$ & $\frac{2\pi h}{\lambda}=0.5$ \\
+\ \\
+\hline
+\ \\
+MEASURED & $2.6+\jj9.0$                 & $11+\jj36$      \\
+MININEC  & $1.8+\jj9.0$                 & $11.6+\jj35.5$  \\
+NEC      & $1.7+\jj10.3$                & $11+\jj36$      \\
+TGP      & $1.78+\jj9.13$               & $11.1+\jj34.3$  \\
+PSRT     & $1.7+\jj3.8$                 & $11.4+\jj31.9$  \\
+TWTD     &                              & $11+\jj34$      \\
+\end{tabular}
+\caption{Comparison of TEE-antenna impedance computations with the
+measured values of Parsad.}
+\label{fig31}
+\end{figure}
 
 Figure~\ref{fig31} compares five computer programs including MININEC for
 the two TEE-antennas. In each case, the programs were tested for
@@ -1578,26 +1656,6 @@ Figures~\ref{fig35} and~\ref{fig36} show the percent difference between
 the NEC and MININEC fields of Figures~\ref{fig33} and~\ref{fig34}. The
 greatest difference occurs very close to the monopole within a segment
 length.
-
-\begin{figure}[h]
-\begin{tabular}{lll}
-\multicolumn{2}{l}{\quad Radius of Wire = $0.004/\lambda$}  \\
-\multicolumn{2}{l}{\quad $k_0 = (h + l) = \pi/2$}           \\
-         & $\frac{2\pi h}{\lambda}=0.2$ & $\frac{2\pi h}{\lambda}=0.5$ \\
-\ \\
-\hline
-\ \\
-MEASURED & $2.6+\jj9.0$                 & $11+\jj36$      \\
-MININEC  & $1.8+\jj9.0$                 & $11.6+\jj35.5$  \\
-NEC      & $1.7+\jj10.3$                & $11+\jj36$      \\
-TGP      & $1.78+\jj9.13$               & $11.1+\jj34.3$  \\
-PSRT     & $1.7+\jj3.8$                 & $11.4+\jj31.9$  \\
-TWTD     &                              & $11+\jj34$      \\
-\end{tabular}
-\caption{Comparison of TEE-antenna impedance computations with the
-measured values of Parsad.}
-\label{fig31}
-\end{figure}
 
 If the near fields are calculated along the surface of the monopole, the
 differences between MININEC and NEC are much more pronounced.
@@ -1803,7 +1861,7 @@ idea. A possible segmentations scheme for the inverted L-antenna is
 suggested in Figure~\ref{fig44}. Alternatively, using your prior
 experience on a similar antenna, you may be able to come closer to the
 converged solution the first time. For example, the inverted L-antenna
-is one wire short of being a Tee-antenna similar to the ones in
+is one wire short of being a TEE-antenna similar to the ones in
 section~\ref{sec-monopoles} (see Figures~\ref{fig28} through~\ref{fig31}).
 For the purpose of this discussion, however, we will use a minimal
 number of segments in order to keep the solution time reasonably short.
