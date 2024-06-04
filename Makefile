@@ -11,7 +11,8 @@ mininec3.dvi: fig1.eps fig2.eps fig3.eps fig4.eps fig5.eps      \
     fig18.eps fig19.eps fig20.eps fig21.eps fig22.eps fig23.eps \
     fig24.eps fig25.eps fig26.eps fig27.eps fig28.eps fig29.eps \
     fig30.eps fig32.eps fig33.eps fig34.eps fig35.eps fig36.eps \
-    fig37.eps fig38.eps fig39.eps fig41.eps fig42.eps fig43.eps
+    fig37.eps fig38.eps fig39.eps fig41.eps fig42.eps fig43.eps \
+    fig44.eps fig45.eps
 
 
 %.dvi: %.tex

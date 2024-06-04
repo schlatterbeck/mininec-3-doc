@@ -7,6 +7,7 @@
 \usepackage[dvips]{graphicx}
 \usepackage{afterpage}
 \usepackage{rotating}
+\usepackage{multirow}
 \fvset{fontsize=\footnotesize}
 
 \title{The New MININEC (Version 3): A Mini-Numerical Electromagnetic Code}
@@ -565,7 +566,7 @@ By substitution, the matrix equation to be solved is
 where
 
 \begin{equation}
-\begin{gathered}
+\begin{gathered}\relax
 [Z_{mn}] = \left.\frac{-1}{4\pi j\omega\varepsilon}\right[
 k^2(\vect{r}_{m+1/2} - \vect{r}_{m-1/2}) \cdot
 (\hat{s}_{n+1/2}\Phi_{m,n,n+1/2} + \hat{s}_{n-1/2}\Phi_{m,n-1/2,n}) \\
@@ -778,10 +779,10 @@ equivalent, lumped-circuit, element-impedance relationship.
 \subsection{Near Fields}
 The electric near fields and the magnetic near fields can be determined
 from the current distribution obtained in the solution of
-equation~\eqref{26}.
+equation~\eqref{eq26}.
 
 The near electric fields are computed by the method described by
-A.~T.~Adams, et al., (reference~\cite{r12}). Using MININEC, the current
+A.~T. Adams, et al., (reference~\cite{r12}). Using MININEC, the current
 on the wire structure is approximated using the computed current pulses.
 To determine the electric field at a given point in the near field, a
 small, virtual thin-wire dipole is placed tat the point with its axis
@@ -1727,7 +1728,7 @@ for a quarterwave monopole}
 \label{fig39}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \begin{center}
 Radiation Resistance and Gain for Dipole Antennas
 \end{center}
@@ -1916,6 +1917,55 @@ properly interpreting MININEC output, is acquired through considerable
 study of antenna theory and properties, study of the data of
 section~\ref{sec-validation}, and equally important, accumulating
 experience by using MININEC.
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics{fig44.eps}
+\ \\
+\begin{tabular}{ll}
+ & $\beta(h+\ell) = ?$     \\
+ & $\beta = 2\pi/\lambda$ \\
+\multicolumn{2}{l}{LET $\lambda = 1$, THEN} \\
+ & $h   \simeq .191$ m    \\
+ & $\ell\simeq .309$ m    \\
+ & $a   \simeq .004$ m    \\
+ & $Z = 263 - j457\Omega$ \\
+ & (Prasad \cite{r18} measured and \\
+ & corrected for shunt feed        \\
+ & point loading)                  \\
+\end{tabular}
+\ \\[5mm]
+\begin{tabular}{c|l|l|l|c|c}
+& \multicolumn{3}{c|}{Coordinates} & & \\
+\cline{2-4}
+Wire End & X  & Y      & Z     & Wire No. & Wire Radius \\
+\hline
+1        & 0. & 0.     & 0.    & \multirow{2}{*}{1} & \multirow{2}{*}{.004} \\
+\cline{1-4}
+2        & 0. & 0.     & 0.191 &                    & \\
+\hline
+1        & 0. & 0.     & 0.191 & \multirow{2}{*}{2} & \multirow{2}{*}{.004} \\
+\cline{1-4}
+2        & 0. & 0.309  & 0.191 &                    & \\
+\end{tabular}
+\ \\[5mm]
+\begin{tabular}{c|c|c}
+\multicolumn{3}{c}{Segmentation}                \\
+\multicolumn{3}{c}{Suggested Convergence Test}  \\
+Wire 1 & Wire 2 & Total \\
+\hline
+\ 4 & \ 6 & 10 \\
+\ 6 & \ 9 & 15 \\
+\ 8 & 12  & 20 \\
+10  & 15  & 25 \\
+12  & 18  & 30 \\
+\end{tabular}
+\end{center}
+\caption{Inverted L-antenna data for the example in
+Section~\ref{sec-getting-started}}
+\label{fig44}
+\end{figure}
+\afterpage\clearpage
 
 \subsection{Getting Started}
 \label{sec-getting-started}
@@ -2335,7 +2385,7 @@ Good luck!
 The \verb+G+ option on the MININEC menu provides the means to change the
 antenna configuration without changing the frequency. The entry point is
 the question to choose the environment, free space or ground. Please see
-section~\ref{sec-env} for details. After choosing the environment, you
+section~\ref{sec-change-env} for details. After choosing the environment, you
 will begin defining the wire configuration, i.e., specify the number of
 wires and the location, radius and segmentation for each wire. Please
 see section~\ref{sec-getting-started} for an example.
@@ -2515,7 +2565,13 @@ For both dBi and volts per meter, you will be prompted to save the
 pattern data. When you answer yes, you are prompted for a file name. The
 pattern data will be saved as ASCII images in this file. You may use an
 editor or the MININEC post processor to prepare this data for plotting
-(see Appendix~\ref{app-B}.
+(see Appendix~\ref{app-B}).
+
+\begin{figure}[htb]
+\centerline{\includegraphics{fig45.eps}}
+\caption{Coordinate system for far field pattern}
+\label{fig45}
+\end{figure}
 
 \subsection{Compute Near Fields}
 The \verb+N+ option on the MININEC menu is used to specify the location
@@ -2539,6 +2595,7 @@ termination of the MININEC session.
 
 \appendix
 \section{A Pre-Processor for MININEC}
+\label{sec-appendix-a}
 \verb+MNPRE.BAS+ converts NEC input data sets to MININEC geometry
 specifications. First prepare an input data file suitable for NEC (see
 reference~\cite{r5} for instructions). Then run \verb+MNPRE.BAS+.
@@ -2558,6 +2615,7 @@ CHANGE GEOMETRY (Y/N)?
 A source listing of \verb+MNPRE.BAS+ follows:
 
 \section{A Post-Processor MININEC}
+\label{app-B}
 \verb+MNPOST.BAS+ processes MININEC output data for plotting using the
 \verb+GRAPS+ program (See NOSC TD 820, ``GRAPS: Graphical Plotting
 System'' by R. T. Laird, July 1985). You may store MININEC currents,
@@ -2581,7 +2639,7 @@ which generates in-line 8087 code for all floating point expressions.
 The following table gives some ideas of the difference in run times for
 the matrix fill in the sample problem in NOSC TD 516, Appendix B.
 
-\begin{table}[h]
+\begin{table}[ht]
 \begin{tabular}{lr}
 BASICA Interpreter & 4 1/2 hours \\
 IBM BASIC Compiler & 22 minutes  \\
