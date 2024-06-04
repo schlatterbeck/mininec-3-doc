@@ -1457,13 +1457,13 @@ loops sizes}
 
 \begin{sidewaysfigure}[htb]
 \centerline{\includegraphics{fig26.eps}}
-\caption{Admittance of small loops predicted by MININEC (Part 1)}
+\caption{Admittance of small loops predicted by MININEC (Part~1)}
 \label{fig26}
 \end{sidewaysfigure}
 
 \begin{sidewaysfigure}[htb]
 \centerline{\includegraphics{fig27.eps}}
-\caption{Admittance of small loops predicted by MININEC (Part 2)}
+\caption{Admittance of small loops predicted by MININEC (Part~2)}
 \label{fig27}
 \end{sidewaysfigure}
 \afterpage\clearpage
@@ -1672,22 +1672,60 @@ The accuracy of the MININEC near fields has been illustrated. MININEC
 near fields are sufficiently accurate for well converged solutions at
 distances greater than a segment length.
 
-\subsection{Far Fields}
-The correct pattern shape can often times be calculated using a coarse
-approximation to the antenna current distribution. However, since the
-antenna input impedance is used to determine gain, it is necessary to
-use a well-converged solution to obtain accurate gain data.
-Figure~\ref{fig40} illustrates both these points. Shown is a comparison
-between MININEC and teh classical solutions from Schelkunoff
-(reference~\cite{r22}) and Jasik (reference~\cite{r23}). The coarse
-solutions are represented by the Schelkunoff and Jasik data. Their data
-are obtained by assuming sinusoidal currents as noted. The MININEC data
-are obtained by reference to the convergence data of the previous
-sections and by adjusting the frequency to obtain the exact resonance
-condition of near zero reactance. The agreement in gain and impedance
-data (when available) is fairly good. Data given by Schelkunoff for
-antennas longer than one wave length cannot be trusted because of the
-assumptions he employs for the current distribution.
+\begin{figure}[htb]
+\centerline{\includegraphics{fig32.eps}}
+\caption{Comparison of near field data from MININEC and NEC to measurements}
+\label{fig32}
+\end{figure}
+
+\begin{figure}[htb]
+\centerline{\includegraphics{fig33.eps}}
+\caption{Near electric fields of a quarterwave monopole computed by
+MININEC and NEC}
+\label{fig33}
+\end{figure}
+
+\begin{figure}[htb]
+\centerline{\includegraphics{fig34.eps}}
+\caption{Near magnetic fields of a quarterwave monopole computed by
+MININEC and NEC}
+\label{fig34}
+\end{figure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig35.eps}}
+\caption{Percent difference between MININEC and NEC for the near field
+data in Figures~\ref{fig33} and~\ref{fig34} (Part~1)}
+\label{fig35}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig36.eps}}
+\caption{Percent difference between MININEC and NEC for the near field
+data in Figures~\ref{fig33} and~\ref{fig34} (Part~2)}
+\label{fig36}
+\end{sidewaysfigure}
+
+\begin{figure}[htb]
+\centerline{\includegraphics{fig37.eps}}
+\caption{Vertical component of the electric field at one radius distance
+for a quarterwave monopole}
+\label{fig37}
+\end{figure}
+
+\begin{figure}[htb]
+\centerline{\includegraphics{fig38.eps}}
+\caption{Horizontal component of the electric field at one radius distance
+for a quarterwave monopole}
+\label{fig38}
+\end{figure}
+
+\begin{figure}[htb]
+\centerline{\includegraphics{fig39.eps}}
+\caption{Phi-component of the magnetic field at one radius distance
+for a quarterwave monopole}
+\label{fig39}
+\end{figure}
 
 \begin{figure}[h]
 \begin{center}
@@ -1741,7 +1779,46 @@ G${}=5.145$ dB               & G${}=5.15$ dB            \\
 \end{center}
 \caption{Comparison of MININEC impedance and gain data to classical
 values given by Schelkunoff and Jasik.}
+\label{fig40}
 \end{figure}
+\afterpage\clearpage
+
+\subsection{Far Fields}
+The correct pattern shape can often times be calculated using a coarse
+approximation to the antenna current distribution. However, since the
+antenna input impedance is used to determine gain, it is necessary to
+use a well-converged solution to obtain accurate gain data.
+Figure~\ref{fig40} illustrates both these points. Shown is a comparison
+between MININEC and teh classical solutions from Schelkunoff
+(reference~\cite{r22}) and Jasik (reference~\cite{r23}). The coarse
+solutions are represented by the Schelkunoff and Jasik data. Their data
+are obtained by assuming sinusoidal currents as noted. The MININEC data
+are obtained by reference to the convergence data of the previous
+sections and by adjusting the frequency to obtain the exact resonance
+condition of near zero reactance. The agreement in gain and impedance
+data (when available) is fairly good. Data given by Schelkunoff for
+antennas longer than one wave length cannot be trusted because of the
+assumptions he employs for the current distribution.
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig41.eps}}
+\caption{A comparison of the run times of MININEC version~2 and~3}
+\label{fig41}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig42.eps}}
+\caption{Solution time for MININEC(3) to solve a dipole in free space}
+\label{fig42}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[htb]
+\centerline{\includegraphics{fig43.eps}}
+\caption{Solution time for MININEC(3) to solve a dipole, loop antenna,
+monopole and TEE antenna}
+\label{fig43}
+\end{sidewaysfigure}
+\afterpage\clearpage
 
 \subsection{Memory, Disk Storage and Run Time}
 Computer memory, disk storage capacity, and solution time are key
@@ -1786,6 +1863,7 @@ Max. no. of          &  50 & 75 &   30 &  50 \\
 Disk storage         &  13 & 57 &   44 & 108 \\
 \quad (k bytes) \\
 \end{tabular}
+\ \\
 
 The solution time and size of the executable is a function of the
 compiler and the compiler/linker options used.
