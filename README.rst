@@ -5,6 +5,9 @@ Re-typeset version of [1]_.
 The reason for preparing this version is that the available original
 report is very badly reproduced from microfiche.
 
+Get the `PDF version`_ of the technical report, unfortunately github
+doesn't recognize it as a valid PDF...
+
 Some of the text in this version was derived from the earlier Mininec
 technical report [2]_, which is identical with the newer version in some
 passages.
@@ -41,3 +44,5 @@ version:
 
 .. _ADA181682: https://apps.dtic.mil/sti/pdfs/ADA181682.pdf
 .. _ADA121535: https://apps.dtic.mil/sti/pdfs/ADA121535.pdf
+.. _`PDF version`:
+    https://github.com/schlatterbeck/mininec-3-doc/blob/master/mininec3.pdf
