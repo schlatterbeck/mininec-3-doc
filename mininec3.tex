@@ -10,11 +10,6 @@
 \usepackage{multirow}
 \fvset{fontsize=\footnotesize}
 
-\title{The New MININEC (Version 3): A Mini-Numerical Electromagnetic Code}
-\author{J. C. Logan and J. W. Rockway}
-\affil{Naval Ocean Systems Center San Diego}
-\date{September 1986}
-
 % penalties
 \clubpenalty=5000
 \widowpenalty=5000
@@ -26,8 +21,41 @@
 \setcounter{bottomnumber}{2}
 \setcounter{totalnumber}{4}
 
+\title{The New MININEC (Version 3): A Mini-Numerical Electromagnetic Code}
+\author{J. C. Logan and J. W. Rockway}
+
 \begin{document}
-\maketitle
+\begin{titlepage}
+\noindent
+{\footnotesize
+[This is a re-typeset version of the original report. The original
+report available from https://apps.dtic.mil/sti/pdfs/ADA181682.pdf is
+very badly reproduced from microfiche]}\\[.5cm]
+
+\noindent
+{\huge NOSC}\\[3mm]
+{\large \textbf{Naval Ocean Systems Center}\\
+San Diego California 92152-5000}\\
+
+\begin{flushright}
+{\large \textbf{Technical Document 936}}\\
+{\large September 1986}\\[1cm]
+
+{\LARGE
+{The New MININEC (Version 3):\\A Mini-Numerical\\Electromagnetic Code}\\
+\Large\flushright{J. C. Logan and J. W. Rockway}
+}
+\end{flushright}
+
+\ \\[7cm]
+\noindent {\large AD-A181 682}\\[-5mm]
+
+\begin{center}
+{\footnotesize Approved for public release distribution unlimited}
+\end{center}
+
+\end{titlepage}
+
 \bibliographystyle{unsrt}
 
 \newcommand{\dd}[1]{\mathrm{d}#1}
@@ -42,6 +70,10 @@
 \newcommand{\jj}{\mbox{j\,}}
 \newcommand{\RE}{\mathrm{Re}}
 
+\clearpage
+\tableofcontents
+\clearpage
+
 \section{Introduction}
 The ``MINI'' Electromagnetics Code, or MININEC, is a method of moments
 computer program for analysis of thin wire antennas \cite{r1}. A
@@ -53,7 +85,7 @@ is written in a BASIC language compatible with many popular
 microcomputers.
 
 MININEC solves for impedance and currents on arbitrarily oriented wires,
-including configurations with multiple wire junkctions, in free space
+including configurations with multiple wire junctions, in free space
 and over a perfectly conducting ground plane. Options include lumped
 parameter impedance loading of wires and calculation of near zone and
 far zone fields. Both near electric fields and near magnetic fields can
@@ -284,14 +316,14 @@ P_n(s) = \left\{
 \label{eq6}
 \end{equation}
 
-where the points $s_{n\pm1/2}$ designate segment midpoints,
+\noindent where the points $s_{n\pm1/2}$ designate segment midpoints,
 
 \begin{equation}
 s_{n+1/2} = \frac{s_{n+1} + s_n}{2}
 \label{eq7}
 \end{equation}
 
-or in terms of the global coordinates,
+\noindent or in terms of the global coordinates,
 
 \begin{equation}
 \vect{r}_{n+1/2} = \frac{\vect{r}_{n+1} + \vect{r}_n}{2}
@@ -368,14 +400,14 @@ form
 \label{eq12}
 \end{equation}
 
-where
+\noindent where
 
 \begin{equation}
-k(s-s^\prime) = \frac{1}{2\pi}\int_{-\pi}^\pi\frac{e^{-jkr}m}{r_m}\dd{\Phi}
+k(s-s^\prime) = \frac{1}{2\pi}\int_{-\pi}^\pi\frac{e^{-jkr_m}}{r_m}\dd{\Phi}
 \label{eq13}
 \end{equation}
 
-and
+\noindent and
 
 \begin{equation}
 r_m = \left((s_m - s^\prime)^2 + 4a^2\sin^2\frac{\Phi}{2}\right)^{1/2}
@@ -403,11 +435,11 @@ of the first kind \cite{r6}.
 \label{eq16}
 \end{equation}
 
-where
+\noindent where
 \[ \beta=\frac{2a}{\left[(s_m-s^\prime)^2+4a^2\right]^{1/2}}
 \]
 
-$F(\frac{\pi}{2},\beta)$ has an approximation \cite{r6}.
+\noindent $F(\frac{\pi}{2},\beta)$ has an approximation \cite{r6}.
 
 \begin{equation}
 \begin{aligned}
@@ -423,8 +455,6 @@ where
 \[
 m = 1 - \beta^2 = \frac{(s_m - s^\prime)^2}{(s_m - s^\prime)^2 + 4a^2}
 \]
-
-and
 
 \[
 \begin{array}{lrl}
@@ -447,6 +477,7 @@ Thus
 
 and this singularity is also subtracted from $k(s_m-s^\prime)$.
 
+\clearpage
 Thus
 
 \begin{equation}
@@ -481,9 +512,10 @@ I_1 & = -\frac{1}{\pi a}\int_{s_u}^{s_v}
 where
 
 \[ u_1 = \frac{s_u - s}{8a} \mbox{ and } u_2 = \frac{s_v - s}{8a}
+\quad.
 \]
 
-Similarly,
+\noindent Similarly,
 
 \begin{equation}
 I_2 = \int_{s_u}^{s_v}
@@ -568,7 +600,7 @@ By substitution, the matrix equation to be solved is
 \label{eq26}
 \end{equation}
 
-where
+\noindent where
 
 \begin{equation}
 \begin{gathered}\relax
@@ -860,7 +892,7 @@ The vector potential is generally defined such that
 \label{eq36}
 \end{equation}
 
-expressed in rectangular coordinates, becomes
+\noindent expressed in rectangular coordinates, becomes
 
 \begin{equation}
 \mu\Hplus =
@@ -1030,14 +1062,14 @@ real ground) yields a reflected field, $\vect{E}_r$, given by
 \label{eq45}
 \end{equation}
 
-or
+\noindent or
 
 \begin{equation}
 \vect{E}_R = R_V\vect{E}_I + (R_H - R_V)(\vect{E}_I\cdot\hat{P})\hat{P}
 \label{eq46}
 \end{equation}
 
-where $\hat{P}$ is a unit vector perpendicular to the plane of
+\noindent where $\hat{P}$ is a unit vector perpendicular to the plane of
 incidence. $\vect{E}_I$ is the incident field and $R_V$ and $R_H$ are
 the vertical and horizontal reflection coefficients, respectively.
 
@@ -1056,7 +1088,7 @@ R_V = \frac{\cos\theta - z\sqrt{1-z^2\sin^2\theta}}
 \end{equation}
 
 \begin{equation}
-R_H = \frac{\left(-z\cos\theta - \sqrt{1-z^2\sin^2\theta}\right)}
+R_H = \frac{-\left(z\cos\theta - \sqrt{1-z^2\sin^2\theta}\right)}
            {\cos\theta + z\sqrt{1-z^2\sin^2\theta}}
 \label{eq48}
 \end{equation}
@@ -1173,7 +1205,7 @@ the computer program.
 
 Reliable, accurate answers are obtained when the user has accumulated
 sufficient experience from frequent and systematic exercise of the
-program to recognize problem areas. He must be fully awarte of potential
+program to recognize problem areas. He must be fully aware of potential
 difficulties throughout the modeling process, from initially setting up
 a problem to interpreting the results. It is recommended that the user
 run MININEC for a number of elementary problems, comparing the results
@@ -1189,7 +1221,7 @@ more complex antenna geometries. Natural first choices are dipoles in
 free space and over ground (or monopoles), followed by TEE and inverted
 L shaped antennas, etc. For each antenna type, a number of problems are
 selected involving different wire lengths and radii. MININEC is run for
-each angenna problem a number of times, varying segmentation (i.e., a
+each antenna problem a number of times, varying segmentation (i.e., a
 convergence test) and other parameters to reveal the program
 limitations. Insight for effective application of the program is gained
 from comparisons with measured data or analytical solutions (when
@@ -1295,7 +1327,7 @@ the thin wire criterion. To illustrate, Figure~\ref{fig13} shows the
 variation of admittance versus the wire radius. The data given by King
 \cite{r9} are slso shown for radii betwenn $10^{-3}$ and
 $10^{-2}$ wave lengths. The segment to radius ratio, $\Delta/a$, is 25
-at $^01{-3}$ and 2.5 at $10^{-2}$. For thicker wires than $10^{-2}$, the
+at $10^{-3}$ and 2.5 at $10^{-2}$. For thicker wires than $10^{-2}$, the
 thin wire criteria is not achieved and the results are expected to be
 not as good. The data show valid behavior for thin wires with
 $\Delta/a > 2.5$ or radii of $10^{-2}$ wave lengths and smaller.
@@ -1460,7 +1492,7 @@ circumscribed by a circle of one wavelength circumference.}
 \begin{sidewaysfigure}[htb]
 \centerline{\includegraphics{fig25.eps}}
 \caption{A comparison of MININEC data to R. W. P. King over a range of
-loops sizes}
+loop sizes}
 \label{fig25}
 \end{sidewaysfigure}
 
@@ -1484,7 +1516,7 @@ model has one segment per wire, with each wire forming one side of the
 polygon model, so that the number of sides and the number of segments
 are equal. For a given circumference, the number of wires, and hence the
 number of segments, can be increased until the solution stabilizes,
-indicating the number of seides required to model the circular loop.
+indicating the number of sides required to model the circular loop.
 Figure~\ref{fig24} shows the results of this procedure for a loop, one
 wave length in circumference. The polygon model is circumscribed by a
 circle whose circumference is one wave length. The wire radius
@@ -1622,7 +1654,7 @@ Figure~\ref{fig31} compares five computer programs including MININEC for
 the two TEE-antennas. In each case, the programs were tested for
 convergence and the best answer with respect to Prasad's measurements is
 given. NEC is the code previously described \cite{r4}. TGP
-(Triangular-Galerkin Procedure) is teh code written by Chao and Straight
+(Triangular-Galerkin Procedure) is the code written by Chao and Straight
 \cite{r11} using triangular expansion and testing functions
 in a Galerkin procedure (i.e., triangles for both testing and expansion
 functions). PSRT (Piece-wise Sinusoidal Reaction Technique) is a
@@ -1771,7 +1803,7 @@ l & = & 1 m       & l & = & $1\lambda$ \\
 a & = & .00001 m  & l & = & $0.00001\lambda$ \\
 f & = & 285.3 MHz & R & = &
     \multicolumn{4}{l}{$(276\log \lambda/{2a}) - 110l^2/199$} \\
-  &   &           &   & = & 7145 ohms \\
+Z & = & 6958-j26.51 ohms  &   & = & 7145 ohms \\
 G & = & 3.63 dB   & G & = & 3.82 dB   \\
 \end{tabular}
 \begin{center}
@@ -1798,7 +1830,7 @@ approximation to the antenna current distribution. However, since the
 antenna input impedance is used to determine gain, it is necessary to
 use a well-converged solution to obtain accurate gain data.
 Figure~\ref{fig40} illustrates both these points. Shown is a comparison
-between MININEC and teh classical solutions from Schelkunoff
+between MININEC and the classical solutions from Schelkunoff
 \cite{r22} and Jasik \cite{r23}. The coarse
 solutions are represented by the Schelkunoff and Jasik data. Their data
 are obtained by assuming sinusoidal currents as noted. The MININEC data
@@ -1932,16 +1964,18 @@ experience by using MININEC.
 \ \\
 \begin{tabular}{ll}
  & $\beta(h+\ell) = ?$     \\
- & $\beta = 2\pi/\lambda$ \\
+ & $\beta = 2\pi/\lambda$  \\
+ & $\beta a = .025$9       \\
 \multicolumn{2}{l}{LET $\lambda = 1$, THEN} \\
  & $h   \simeq .191$ m    \\
  & $\ell\simeq .309$ m    \\
  & $a   \simeq .004$ m    \\
  & $Z = 263 - j457\Omega$ \\
- & (Prasad \cite{r18} measured and \\
- & corrected for shunt feed        \\
- & point loading)                  \\
 \end{tabular}
+
+(Prasad \cite{r18} measured and
+corrected for shunt feed
+point loading)
 \ \\[5mm]
 \begin{tabular}{c|l|l|l|c|c}
 & \multicolumn{3}{c|}{Coordinates} & & \\
@@ -2009,7 +2043,7 @@ define the environment. MININEC can then solve for the currents. Once
 MININEC has the solution, you may then request near and far fields
 (patterns).
 
-\noindent Now run MININEC. The first question you must answer is:
+Now run MININEC. The first question you must answer is:
 
 \begin{Verbatim}
 OUTPUT TO CONSOLE, PRINTER, OR DISK (C/P/D)?
@@ -2034,7 +2068,7 @@ or simply enter return to select the default value of 299.8 MHz (or a
 wave length of one meter).
 
 \begin{Verbatim}
-FREQUENCY (MHz)=
+FREQUENCY (MHz)?
     WAVE LENGTH = 1 METER
 \end{Verbatim}
 
@@ -2085,7 +2119,7 @@ NO. OF WIRES?  0
    G - CHANGE GEOMETRY     C - COMPUTE/DISPLAY CURRENTS
    E - CHANGE ENVIRONMENT  P - COMPUTE FAR-FIELD PATTERNS
    X - CHANGE EXCITATION   N - COMPUTE NEAR-FIELDS
-   L - CHANGE LOADS/NET    Q - QUITS
+   L - CHANGE LOADS/NET    Q - QUIT
    F - CHANGE FREQUENCY
 ************************************************************
    COMMAND?
@@ -2101,7 +2135,7 @@ NO. OF WIRES?  0
    G - CHANGE GEOMETRY     C - COMPUTE/DISPLAY CURRENTS
    E - CHANGE ENVIRONMENT  P - COMPUTE FAR-FIELD PATTERNS
    X - CHANGE EXCITATION   N - COMPUTE NEAR-FIELDS
-   L - CHANGE LOADS/NET    Q - QUITS
+   L - CHANGE LOADS/NET    Q - QUIT
    F - CHANGE FREQUENCY
 ************************************************************
    COMMAND?  G
@@ -2150,6 +2184,7 @@ NO. OF SEGMENTS?  4
 END ONE COORDINATES (X,Y,Z)?  0,0,0
 END TWO COORDINATES (X,Y,Z)?  0,0,.191
                      RADIUS?  .004
+
             COORDINATES                                 END         NO. OF
    X             Y             Z          RADIUS     CONNECTION     SEGMENTS
 0             0              0                          -1
@@ -2182,7 +2217,7 @@ WIRE NO. 2
             COORDINATES                                 END         NO. OF
    X             Y             Z          RADIUS     CONNECTION     SEGMENTS
 0             0              .191                         1
-0             0              .091          .004           0            6
+0             .309           .191          .004           0            6
 CHANGE WIRE NO.  2  (Y/N)?
 \end{Verbatim}
 
@@ -2202,7 +2237,7 @@ not let you get away with a zero radius, or a zero wire length.
 If you are now satisfied with the wire two data entry, we may proceed.
 MININEC will produce a table of the coordinates for the location of each
 current pulse on each wire. Note that the radius and connection data are
-also given so tht you may verify your data entry.
+also given so that you may verify your data entry.
 
 \begin{Verbatim}
 CHANGE WIRE NO.  2  (Y/N)?  N
@@ -2268,16 +2303,16 @@ NUMBER OF LOADS?  0
    G - CHANGE GEOMETRY     C - COMPUTE/DISPLAY CURRENTS
    E - CHANGE ENVIRONMENT  P - COMPUTE FAR-FIELD PATTERNS
    X - CHANGE EXCITATION   N - COMPUTE NEAR-FIELDS
-   L - CHANGE LOADS/NET    Q - QUITS
+   L - CHANGE LOADS/NET    Q - QUIT
    F - CHANGE FREQUENCY
 ************************************************************
    COMMAND?
 \end{Verbatim}
 
 You are now faced with the main menu again. By selection of an
-appropriate command letter, you may change the geometry(\verb+G+),
+appropriate command letter, you may change the geometry (\verb+G+),
 change the environment (\verb+E+), change the source or excitation
-(\verb+E+), change the loads and networks (\verb+L+), and change the
+(\verb+X+), change the loads and networks (\verb+L+), and change the
 frequency. When satisfied with the antenna geometry and environment, you
 are ready to determine the antenna properties. The preferred choice at
 this point is \verb+C+, compute and display the currents. If you select
@@ -2373,7 +2408,7 @@ SAVE CURRENTS TO A FILE (Y/N) ? N
    G - CHANGE GEOMETRY     C - COMPUTE/DISPLAY CURRENTS
    E - CHANGE ENVIRONMENT  P - COMPUTE FAR-FIELD PATTERNS
    X - CHANGE EXCITATION   N - COMPUTE NEAR-FIELDS
-   L - CHANGE LOADS/NET    Q - QUITS
+   L - CHANGE LOADS/NET    Q - QUIT
    F - CHANGE FREQUENCY
 ************************************************************
    COMMAND?
@@ -2446,7 +2481,7 @@ antenna feed excitation (i.e., number of feeds, feed location and
 magnitude and phase) without changing the geometry, environment,
 frequency or loading. Changing only the excitation does not require
 re-filling or re-factoring of the matrix. Hence, after solving for the
-currents for the initial excitation, you can rapidly try oout all
+currents for the initial excitation, you can rapidly try out all
 possible source locations or try multiple source excitation. Source
 locations must coincide with the locations of the current pulse
 functions. You cannot put source excitations on non-existent pulses. At
@@ -2479,7 +2514,7 @@ The simplest load type is impedance loading. You must supply the pulse
 location, resistance and reactance for each load, in turn. The reactance
 value you specify will not change when you change the frequency. If you
 desire the load impedance to change appropriately with frequency, you
-must change teh impedance load every time you change frequency.
+must change the impedance load every time you change frequency.
 Alternatively, you may specify your load in terms of an equivalent
 S-parameter function.
 
@@ -2507,7 +2542,7 @@ example a series RC circuit has an impedance of
 hence
 \[A_0 = RC + 1 \]
 
-\[A_1 = 0 \mbox{for }i > 0 \]
+\[A_1 = 0 \mbox{ for }i > 0 \]
 
 and
 
@@ -2515,14 +2550,14 @@ and
 
 \[B_1 = C\]
 
-\[B_i = 0 \mbox{for }i>1\]
+\[B_i = 0 \mbox{ for }i>1\]
 
 When you select the S-parameter load option, you will be prompted for
 the pulse number (at which to locate each load) and the order of the
 S-parameter impedance function. The order is the highest exponent of $S$
 occurring in either the numerator or denominator. For the example cited
 above, the order is one. After supplying these two numbers, you will be
-prompted for the magnitude of teh coefficients of $S$ in order, starting
+prompted for the magnitude of the coefficients of $S$ in order, starting
 with the order zero and up to the order you have specified. The
 coefficients are given in pairs, i.e., numerator and denominator for
 each order.
@@ -2601,6 +2636,10 @@ editor of your choice to process this data for plotting.
 The \verb+Q+ option on the MININEC menu provides a clean and efficient
 termination of the MININEC session.
 
+\clearpage
+\bibliography{mininec}
+\clearpage
+
 \appendix
 \section{A Pre-Processor for MININEC}
 \label{sec-appendix-a}
@@ -2667,5 +2706,4 @@ compilers allow 70 pulses.
 
 A program listing dimensioned for the IBM BASIC Compiler follows:
 
-\bibliography{mininec}
 \end{document}

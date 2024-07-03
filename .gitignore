@@ -5,7 +5,9 @@
 *.blg
 *.pdf
 *.ppm
+*.toc
 *.eps
+*.html
 *.ps
 .*.swp
 .nfs*
