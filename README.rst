@@ -6,7 +6,8 @@ The reason for preparing this version is that the available original
 report is very badly reproduced from microfiche.
 
 Get the `PDF version`_ of the technical report, unfortunately github
-doesn't recognize it as a valid PDF...
+doesn't recognize it as a valid PDF, so you need to click on "Download
+raw file".
 
 Some of the text in this version was derived from the earlier Mininec
 technical report [2]_, which is identical with the newer version in some
