@@ -13,6 +13,10 @@ Some of the text in this version was derived from the earlier Mininec
 technical report [2]_, which is identical with the newer version in some
 passages.
 
+Finally: Paul McMahon VK3DIP sent me a scanned version (from some paper
+document he had access to) of the completely unreadable pages in the
+document. Without him this project would not have been possible.
+
 The following changes to the original report were adopted in this
 version:
 
