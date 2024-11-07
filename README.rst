@@ -42,7 +42,9 @@ version:
 - In the text after formula (3) when explaining the reduced kernel, the
   r in the explanation for k_0 should not be a vector. The formula is
   also missing parentheses and has bogus (s) terms (at least r(s) is not
-  used anywhere else). Compare to equation (24).
+  used anywhere else) this might have been a correction where the r
+  vectors should have been replaced with s (and s'). I've replaced the r
+  vectors in the formula with s and s'. Compare to equation (24).
 - In formula (17) a_0 should not have a factor of m.
 - In the explanation to equation (35) (p. 16 in the original) the
   variables theta with indeces x, y, and z were using an uppercase 'O'
