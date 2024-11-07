@@ -35,6 +35,13 @@ version:
   using BiBTeX conventions for the entries and this sometimes changes
   the order of information in an entry. I've also left out some of the
   "Inc" or "Book Company" additions from the publisher information.
+- In the explanation to equation (35) (p. 16 in the original) the
+  variables theta with indeces x, y, and z were using an uppercase 'O'
+  instead of the greek theta.
+- In the explanations after formula (2) the integration variable in the
+  integral from -pi to pi in the formula for k(s-s') and in the sin in
+  the formula for r are probably a *lowercase* phi not an uppercase phi.
+  This also applies to formulas (13), (14), (15), (16), (19) and (23).
 - I've not spent the effort of transcribing the program listings.
 
 
