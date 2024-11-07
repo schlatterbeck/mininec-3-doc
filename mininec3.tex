@@ -296,7 +296,7 @@ procedure.
 
 The wires are divided into equal segments, and, as shown in
 Figure~\ref{fig1}, the vectors $\vect{r}_n, n=0, 1, \ldots N+1$ are
-defined, with respect to the global coordinate origin, $0^n$. The unit
+defined, with respect to the global coordinate origin, $0$. The unit
 vectors parallel to the wire axis for each segment shown are defined as
 
 \begin{equation}
@@ -822,7 +822,7 @@ The near electric fields are computed by the method described by
 A.~T. Adams, et al., \cite{r12}. Using MININEC, the current
 on the wire structure is approximated using the computed current pulses.
 To determine the electric field at a given point in the near field, a
-small, virtual thin-wire dipole is placed tat the point with its axis
+small, virtual thin-wire dipole is placed at the point with its axis
 parallel to the appropriate vector component. The open-circuit voltage
 at the near field point can be calculated from the knowledge of the
 current distribution over the wire structure and the mutual impedance
@@ -874,8 +874,8 @@ Mendelovicz \cite{r13}. The peak electric field is
 \[ B = E_x^2\sin 2\theta_x + E_y^2\sin 2\theta_y + E_z^2\sin 2\theta_z
 \]
 
-\noindent and where $O_x$, $O_y$, and $O_z$ are the phase angles for the
-corresponding field component.
+\noindent and where $\theta_x$, $\theta_y$, and $\theta_z$ are the phase
+angles for the corresponding field component.
 
 The near magnetic fields are computed by a comparable method. As is the
 case for electric near fields, the currents on the wires are
@@ -966,7 +966,7 @@ Once the induced currents on the wires have been determined from
 equation~\eqref{eq25}, the radiated electric fields are computed by
 
 \begin{equation}
-\vect{E}(\vect{r}_0) = \int_L\frac{jks}{4\pi} + \frac{e^{-jkr_0}}{r_0}
+\vect{E}(\vect{r}_0) = \int_L\frac{jk\eta}{4\pi} + \frac{e^{-jkr_0}}{r_0}
 +\left[\hat{k} + \vect{I}(s)\hat{k}-\vect{I}(s)\right]
 e^{i\vect{K}\cdot\vect{r}}\dd{s}
 \label{eq41}
@@ -976,7 +976,7 @@ e^{i\vect{K}\cdot\vect{r}}\dd{s}
 $\bar{k} = \vect{r}_0 / |\vect{r}_0|$, and
 $\vect{K} = k\hat{k} = \frac{2\pi}{\lambda}\hat{k}$. The integral is
 evaluated in closed form over each straight wire segment for each
-current pulse and is reduced to tha summation over the wire segments.
+current pulse and is reduced to the summation over the wire segments.
 The fields are then evaluated as real and imaginary parts of the
 $\theta$ and $\phi$ components at a specified radial distance. If the
 radial distance is zero, the factor $e^{-jkr_0}/r_0$ defaults to unity.
@@ -1008,7 +1008,7 @@ sources. $P(\theta,\phi)$ is determined from
 
 \begin{equation}
 P(\theta,\phi) = \frac{1}{2} r_0^2 \RE[\vect{E}\times\vect{H}]
-= \frac{r_0^2}{2n}\vect{E}\cdot\vect{E}^*
+= \frac{r_0^2}{2\eta}\vect{E}\cdot\vect{E}^*
 \label{eq44}
 \end{equation}
 
