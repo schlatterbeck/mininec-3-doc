@@ -32,8 +32,11 @@ mininec3.dvi: fig1.eps fig2.eps fig3.eps fig4.eps fig5.eps      \
 %.ps: %.dvi
 	dvips $<
 
+authors = "J. C. Logan; J. W. Rockway"
+title   = "The New MININEC (Version 3): A Mini-Numerical Electromagnetic Code"
 %.pdf: %.ps
 	ps2pdf $<
+	exiftool -Author=$(authors) -Title=$(title) $@
 
 %.ppm: %.png
 	$(PNGTOPPM) $< > $@
