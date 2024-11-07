@@ -42,6 +42,7 @@ version:
   integral from -pi to pi in the formula for k(s-s') and in the sin in
   the formula for r are probably a *lowercase* phi not an uppercase phi.
   This also applies to formulas (13), (14), (15), (16), (19) and (23).
+- In formula (17) a_0 should not have a factor of m.
 - I've not spent the effort of transcribing the program listings.
 
 
