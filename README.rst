@@ -49,6 +49,10 @@ version:
 - In the explanation to equation (35) (p. 16 in the original) the
   variables theta with indeces x, y, and z were using an uppercase 'O'
   instead of the greek theta.
+- I've exchanged figures 38 and 39: They were clearly mixed up in the
+  original report, one being the E-field, one being the H-field of a
+  quarterwave monopole, the figure captions didn't match the actual
+  graphics.
 - I've not spent the effort of transcribing the program listings.
 
 
