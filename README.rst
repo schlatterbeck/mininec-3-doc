@@ -53,6 +53,21 @@ version:
   original report, one being the E-field, one being the H-field of a
   quarterwave monopole, the figure captions didn't match the actual
   graphics.
+- Figure 31: I've corrected the formula which reads in the original:
+  k_0 = (h + l) = pi/2
+  This is corrected to
+  k_0 * (h + l) = pi/2
+  Because for this antenna k_0=2*pi (called beta in the cited Prasad paper)
+  And (h + l) = 0.25 for all these antennas.
+  (Contrary to most of the paper the first '=' is quite readable in the
+  formula so we have to asume a typo), note that the first mininec
+  report [2]_ has a similar table on page 27 as Figure 9 which has the
+  formula correct.
+  Also note that in this table the values for mininec are none of the ones
+  given in Figure 28, at least for k0h=0.5 the mininec model has 8
+  segments for the vertical part and 17 segments each for the horizontal
+  components, this is the version of the T-antenna that comes with
+  mininec since the very first version [2]_.
 - I've not spent the effort of transcribing the program listings.
 
 
