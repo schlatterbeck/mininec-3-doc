@@ -37,6 +37,7 @@ title   = "The New MININEC (Version 3): A Mini-Numerical Electromagnetic Code"
 %.pdf: %.ps
 	ps2pdf $<
 	exiftool -Author=$(authors) -Title=$(title) $@
+	rm $@_original
 
 %.ppm: %.png
 	$(PNGTOPPM) $< > $@
@@ -46,4 +47,6 @@ title   = "The New MININEC (Version 3): A Mini-Numerical Electromagnetic Code"
 
 clean:
 	rm -f *.ppm *.eps  mininec3.bbl mininec3.log mininec3.ps \
-            mininec3.dvi mininec3.blg mininec3.aux
+	    mininec3.dvi mininec3.blg mininec3.aux
+
+# vim: set noet sw=4 :
